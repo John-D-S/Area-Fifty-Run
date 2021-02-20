@@ -338,10 +338,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normalMovementForce: 60
   boostMovementForce: 100
+  runningDifficulty: 3
   airtimeMovementForce: 5
   jumpForce: 4
   maxJumpsRemaining: 2
-  runningDifficulty: 3
   jetPackFuelMax: 3
   jetPackForce: 20
   jetPack: {fileID: 8102324711375088186, guid: 57241709693799f4db62685afb9be067, type: 3}

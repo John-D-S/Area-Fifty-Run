@@ -38,7 +38,6 @@ public class PlayerController : MonoBehaviour
     private float boostTimer;
     private float movementForce;
     private float jetPackFuel;
-    private bool jetPackEnabled;
     private GameObject jetPackInstance;
 
     void Start()
@@ -76,7 +75,6 @@ public class PlayerController : MonoBehaviour
             }
         }
         grounded = true;
-        jetPackEnabled = false;
 
         //this recharges the jumps when you land on the a surface that isn't a roof
         if (jumpsRemaining != maxJumpsRemaining)
