@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
     private float movementForce;
     private float jetPackFuel;
     private GameObject jetPackInstance;
+    private GameObject jetPackFuelGauge;
 
     void Start()
     {
@@ -46,6 +47,19 @@ public class PlayerController : MonoBehaviour
         chCollider = gameObject.GetComponent<Collider2D>();
         movementForce = normalMovementForce;
         jetPackInstance = Instantiate(jetPack, gameObject.transform);
+        foreach (Transform thing in jetPackInstance.transform)
+        {
+            if (thing.tag == "Gauge")
+            {
+                Debug.Log("fuelGauge was found");
+                jetPackFuelGauge = thing.gameObject;
+                break;
+            }
+            else
+            {
+                Debug.Log("Gauge was looked for");
+            }
+        }
         jetPackInstance.SetActive(false);
     }
 
@@ -151,7 +165,8 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(Vector3.up * jetPackForce, ForceMode2D.Force);
             jetPackFuel -= Time.deltaTime;
-            Debug.Log(jetPackFuel);
+            jetPackFuelGauge.transform.localScale = new Vector3(0.5f, jetPackFuel / jetPackFuelMax, 1);
+            jetPackFuelGauge.transform.localPosition = new Vector3(0, 0.5f * (jetPackFuel / jetPackFuelMax) - 0.5f, 0);
         }
         else if(JumpPressedThisFrame() && jumpsRemaining > 0)//jumping and doublejumping
         {
