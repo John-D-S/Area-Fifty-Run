@@ -5,24 +5,23 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-
     [SerializeField, Tooltip("The force applied to the player to move it on the ground.")]
     private float normalMovementForce = 60;
-    [SerializeField]
+    [SerializeField, Tooltip ("The force applied to the player to move it on the ground while boosted.")]
     private float boostMovementForce = 100;
+    [SerializeField, Tooltip("This influences the maximum speed of the player while they're on the ground")]
+    private float runningDifficulty = 1;
     [SerializeField, Tooltip("The force applied to the player to move it in the air")]
     private float airtimeMovementForce = 5;
     [SerializeField, Tooltip("The impulse force applied to the player to make it jump")]
     private float jumpForce = 3;
     [SerializeField, Tooltip("The maximum number of jumps the player is able to make before they land again")]
     private int maxJumpsRemaining = 2;
-    [SerializeField, Tooltip("This influences the maximum speed of the player while they're on the ground")]
-    private float runningDifficulty = 1;
-    [SerializeField]
+    [SerializeField, Tooltip("The amount of time in seconds that the jetPack can be used for at a time.")]
     private float jetPackFuelMax = 3;
-    [SerializeField]
+    [SerializeField, Tooltip("The Upwards force applied to the player while the jetpack is being used")]
     private float jetPackForce = 20;
-    [SerializeField]
+    [SerializeField, Tooltip("The wearable jetpack prefab that the player will wear while the jetpack is active")]
     private GameObject jetPack;
     
 
@@ -47,8 +46,9 @@ public class PlayerController : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody2D>();
         chCollider = gameObject.GetComponent<Collider2D>();
         movementForce = normalMovementForce;
+        jetPackInstance = Instantiate(jetPack, gameObject.transform);
+        jetPackInstance.SetActive(false);
     }
-
 
     //picking up powerups
     private void OnTriggerEnter2D(Collider2D collider)
@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
         {
             jetPackFuel = jetPackFuelMax;
             Destroy(collider.gameObject);
-            jetPackInstance = Instantiate(jetPack, transform);
+            jetPackInstance.SetActive(true);
         }
     }
 
@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviour
             }
         }
         grounded = true;
-        //jetPackEnabled = false;
+        jetPackEnabled = false;
 
         //this recharges the jumps when you land on the a surface that isn't a roof
         if (jumpsRemaining != maxJumpsRemaining)
@@ -112,7 +112,6 @@ public class PlayerController : MonoBehaviour
         groundNormal = Vector2.up;
     }
 
-    //TODO: make this a generalized function for any axis
     private bool JumpPressedThisFrame()
     {
         if (Input.GetAxis("Jump") <= 0 && jumpHeldDown == true)
@@ -144,37 +143,13 @@ public class PlayerController : MonoBehaviour
             boostTimer -= Time.deltaTime;
         }
 
-        if (jetPackFuel <= 0 && jetPackInstance != null)
+        if (jetPackFuel <= 0)
         {
-            Destroy(jetPackInstance);
-            jetPackInstance = null;
+            jetPackInstance.SetActive(false);
         }
 
         //using Jetpack
-        if (Input.GetAxis("Jump") > 0 && jetPackFuel > 0)
-        {
-            rb.AddForce(Vector3.up * jetPackForce, ForceMode2D.Force);
-            jetPackFuel -= Time.deltaTime;
-            Debug.Log(jetPackFuel);
-        }
-        else if (JumpPressedThisFrame() && jumpsRemaining > 0)//jumping and doublejumping
-        {
-            if (timeSinceLeftGround < 0.25f && jumpsRemaining == maxJumpsRemaining)
-            {
-                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
-                rb.AddForce(groundNormal.normalized * jumpForce, ForceMode2D.Impulse);
-            }
-            else if (jumpsRemaining < maxJumpsRemaining)
-            {
-                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
-            }
-            rb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
-            jumpsRemaining -= 1;
-            jumpHeldDown = true;
-        }
-
-        //using Jetpack
-        if (Input.GetAxis("Jump") > 0 && jetPackFuel > 0)
+        if (Input.GetAxis("Jump") > 0 && jetPackFuel > 0 && timeSinceLeftGround > 0.25f)
         {
             rb.AddForce(Vector3.up * jetPackForce, ForceMode2D.Force);
             jetPackFuel -= Time.deltaTime;
@@ -193,7 +168,6 @@ public class PlayerController : MonoBehaviour
             }
             rb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
             jumpsRemaining -= 1;
-            jumpHeldDown = true;
         }
 
         if (timeSinceLeftGround < 0.3)
@@ -210,16 +184,5 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(new Vector2(Input.GetAxis("Horizontal") * airtimeMovementForce, 0));
         }
-        /*
-        if (dashCooldown > 0)
-        {
-            dashCooldown -= Time.fixedDeltaTime;
-        }
-        if (dash.ReadValue<float>() == 1 && dashCooldown <= 0)
-        {
-            body.AddForce(Camera.transform.rotation * (dashForce * Vector3.forward), ForceMode.Impulse);
-            dashCooldown = 1f;
-        }
-        */
     }
 }
