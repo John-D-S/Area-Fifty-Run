@@ -27,7 +27,6 @@ public class PlayerController : MonoBehaviour
 
     //how many jumps the player is able to make right now before they land back on the ground
     private int jumpsRemaining = 1;
-
     private Rigidbody2D rb;
     private Collider2D chCollider;
     private bool grounded = false;
@@ -40,6 +39,7 @@ public class PlayerController : MonoBehaviour
     private float jetPackFuel;
     private GameObject jetPackInstance;
     private GameObject jetPackFuelGauge;
+    private ParticleSystem jetPackExhaust;
 
     void Start()
     {
@@ -51,15 +51,11 @@ public class PlayerController : MonoBehaviour
         {
             if (thing.tag == "Gauge")
             {
-                Debug.Log("fuelGauge was found");
                 jetPackFuelGauge = thing.gameObject;
                 break;
             }
-            else
-            {
-                Debug.Log("Gauge was looked for");
-            }
         }
+        jetPackExhaust = jetPackInstance.GetComponentInChildren<ParticleSystem>();
         jetPackInstance.SetActive(false);
     }
 
@@ -76,6 +72,7 @@ public class PlayerController : MonoBehaviour
             jetPackFuel = jetPackFuelMax;
             Destroy(collider.gameObject);
             jetPackInstance.SetActive(true);
+            UpdateJetpackFuelGuage();
         }
     }
 
@@ -88,19 +85,8 @@ public class PlayerController : MonoBehaviour
                 SceneManager.LoadScene(0);//if the wall touches the player, reload the scene
             }
         }
+        UpdateJumps(collision);
         grounded = true;
-
-        //this recharges the jumps when you land on the a surface that isn't a roof
-        if (jumpsRemaining != maxJumpsRemaining)
-        {
-            for (int i = 0; i < collision.contactCount; i++)
-            {
-                if (collision.GetContact(i).normal.y >= -0.1f)
-                {
-                    jumpsRemaining = maxJumpsRemaining;
-                }
-            }
-        }
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -116,6 +102,11 @@ public class PlayerController : MonoBehaviour
         }
         //ground normal is the average normal of all points of contact
         groundNormal = contactNormalSum / noOfContacts;
+
+        if (jumpsRemaining == 0 && grounded)
+        {
+            UpdateJumps(collision);
+        }
     }
     
     private void OnCollisionExit2D(Collision2D collision)
@@ -142,6 +133,27 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void UpdateJetpackFuelGuage()
+    {
+        jetPackFuelGauge.transform.localScale = new Vector3(0.5f, jetPackFuel / jetPackFuelMax, 1);
+        jetPackFuelGauge.transform.localPosition = new Vector3(0, 0.5f * (jetPackFuel / jetPackFuelMax) - 0.5f, 0);
+    }
+
+    void UpdateJumps(Collision2D collision)
+    {
+        //this recharges the jumps when you land on the a surface that isn't a roof
+        if (jumpsRemaining != maxJumpsRemaining)
+        {
+            for (int i = 0; i < collision.contactCount; i++)
+            {
+                if (collision.GetContact(i).normal.y >= -0.1f)
+                {
+                    jumpsRemaining = maxJumpsRemaining;
+                }
+            }
+        }
+    }
+
     void FixedUpdate()
     {
         //using PizzaBoost
@@ -165,8 +177,11 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(Vector3.up * jetPackForce, ForceMode2D.Force);
             jetPackFuel -= Time.deltaTime;
-            jetPackFuelGauge.transform.localScale = new Vector3(0.5f, jetPackFuel / jetPackFuelMax, 1);
-            jetPackFuelGauge.transform.localPosition = new Vector3(0, 0.5f * (jetPackFuel / jetPackFuelMax) - 0.5f, 0);
+            UpdateJetpackFuelGuage();
+            if (jetPackExhaust != null && !jetPackExhaust.isPlaying)
+            {
+                jetPackExhaust.Play();
+            }
         }
         else if(JumpPressedThisFrame() && jumpsRemaining > 0)//jumping and doublejumping
         {
@@ -181,6 +196,18 @@ public class PlayerController : MonoBehaviour
             }
             rb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
             jumpsRemaining -= 1;
+            if (jetPackExhaust != null && jetPackExhaust.isPlaying)
+            {
+                jetPackExhaust.Stop();
+            }
+        }
+        else
+        {
+
+            if (jetPackExhaust != null && jetPackExhaust.isPlaying)
+            {
+                jetPackExhaust.Stop();
+            }
         }
 
         if (timeSinceLeftGround < 0.3)
