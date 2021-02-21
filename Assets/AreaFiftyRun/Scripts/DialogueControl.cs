@@ -10,9 +10,6 @@ public class DialogueControl : MonoBehaviour
     [SerializeField] private TextMeshProUGUI playerDialogueText;
     [SerializeField] private TextMeshProUGUI playerDeathText;
 
-    [SerializeField] private string[] playerStartSentences;
-    [SerializeField] private string[] playerDeathSentences;
-
     [SerializeField] private string[] playerStartSentences = new string[] 
     {
         "I got the need for speed!",
