@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
     private GameObject jetPackInstance;
     private GameObject jetPackFuelGauge;
     private ParticleSystem jetPackExhaust;
+    private float exhaustEmissionRate;
 
     void Start()
     {
@@ -178,10 +179,7 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(Vector3.up * jetPackForce, ForceMode2D.Force);
             jetPackFuel -= Time.deltaTime;
             UpdateJetpackFuelGuage();
-            if (jetPackExhaust != null && !jetPackExhaust.isPlaying)
-            {
-                jetPackExhaust.Play();
-            }
+            exhaustEmissionRate = 300;
         }
         else if(JumpPressedThisFrame() && jumpsRemaining > 0)//jumping and doublejumping
         {
@@ -196,19 +194,15 @@ public class PlayerController : MonoBehaviour
             }
             rb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
             jumpsRemaining -= 1;
-            if (jetPackExhaust != null && jetPackExhaust.isPlaying)
-            {
-                jetPackExhaust.Stop();
-            }
+            exhaustEmissionRate = 0;
         }
         else
         {
-
-            if (jetPackExhaust != null && jetPackExhaust.isPlaying)
-            {
-                jetPackExhaust.Stop();
-            }
+            exhaustEmissionRate = 0;
         }
+
+        var em = jetPackExhaust.emission;
+        em.rateOverTime = exhaustEmissionRate;
 
         if (timeSinceLeftGround < 0.3)
         {

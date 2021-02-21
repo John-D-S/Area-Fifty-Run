@@ -48,7 +48,6 @@ public class GenerateLevel : MonoBehaviour
         float xPos = gameObject.transform.position.x;
         if (xPos * 0.05f> noOfSpawnedObjects)
         {
-            Debug.Log("ModuleJustSpawned");
             Instantiate(groundModules[Random.Range(0, groundModules.Count)], new Vector3((Mathf.RoundToInt(xPos * 0.05f) + 5) * 20, 0), Quaternion.identity);
             Instantiate(floatingModules[Random.Range(0, floatingModules.Count)], new Vector3((Mathf.RoundToInt(xPos * 0.05f) + 5) * 20, Random.Range(0, 5)), Quaternion.identity);
             if (Random.Range(0, powerUpChance) == 0)
