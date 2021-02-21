@@ -5,15 +5,17 @@ using TMPro;
 
 public class DialogueControl : MonoBehaviour
 {
-    
+    [SerializeField] private GameObject player;
+
     [SerializeField] private TextMeshProUGUI playerDialogueText;
+    [SerializeField] private TextMeshProUGUI playerDeathText;
 
     [SerializeField] private string[] playerStartSentences;
     [SerializeField] private string[] playerDeathSentences;
 
     
     [SerializeField] private GameObject speechBubble;
-
+    [SerializeField] private GameObject deathBubble;
     
     private float speechBubbleTimer = 3f;
 
@@ -23,6 +25,7 @@ public class DialogueControl : MonoBehaviour
     void Start()
     {
         playerDialogueText.text = playerStartSentences[Random.Range(0, playerStartSentences.Length)];
+        playerDeathText.text = playerDeathSentences[Random.Range(0, playerDeathSentences.Length)];
 
 
     }
@@ -42,5 +45,11 @@ public class DialogueControl : MonoBehaviour
 
        
     }
-
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.tag == "WallOfDeath")
+        {
+            deathBubble.SetActive(true);
+        }
+    }
 }
