@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.SceneManagement;
+//using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
     private GameObject jetPackFuelGauge;
     private ParticleSystem jetPackExhaust;
     private float exhaustEmissionRate;
+    [System.NonSerialized] public bool dead;
 
     void Start()
     {
@@ -75,17 +76,16 @@ public class PlayerController : MonoBehaviour
             jetPackInstance.SetActive(true);
             UpdateJetpackFuelGuage();
         }
+        if (collider.tag == "WallOfDeath")
+        {
+            dead = true;
+            //SceneManager.LoadScene(0);//if the wall touches the player, reload the scene
+            //loadscene(0) is now called in blackscreen, after fading to black
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        for (int i = 0; i < collision.contactCount; i++)
-        {
-            if (collision.GetContact(i).collider.tag == "WallOfDeath")
-            {
-                SceneManager.LoadScene(0);//if the wall touches the player, reload the scene
-            }
-        }
         UpdateJumps(collision);
         grounded = true;
     }
@@ -157,6 +157,11 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (dead)
+        {
+
+        }
+
         //using PizzaBoost
         if (boostTimer <= 0)
         {
