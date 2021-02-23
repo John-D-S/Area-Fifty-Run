@@ -164,7 +164,7 @@ public class PlayerController : MonoBehaviour
     {
         if (dead)
         {
-
+            return;
         }
 
         //using PizzaBoost
