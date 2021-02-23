@@ -18,6 +18,8 @@ public class GenerateLevel : MonoBehaviour
     private int seed = 0;
     [SerializeField]
     private bool randomizeSeed = true;
+    [SerializeField]
+    private int modulesBeforeWorld = 8;
 
     private List<GameObject> spawnedObjects;
     private int noOfSpawnedObjects;
@@ -28,8 +30,9 @@ public class GenerateLevel : MonoBehaviour
         {
             Random.InitState(seed);
         }
-
-        for (int i = 0; i < 5; i++)
+        
+        /* this instantiates 5 random modules infront of the player at start. that is no longer needed, since the bunker now takes their place
+        for (int i = 0; i < modulesBeforeWorld; i++)
         {
             if (i == 0) //this if-else statement ensures that the first module is always just the default one. it's probably not the best way of doing it
             {
@@ -40,6 +43,7 @@ public class GenerateLevel : MonoBehaviour
                 Instantiate(groundModules[Random.Range(0, groundModules.Count)], new Vector3((float)i * 20, 0), Quaternion.identity);
             }
         }
+        */
     }
 
     // Update is called once per frame
@@ -54,11 +58,11 @@ public class GenerateLevel : MonoBehaviour
             {
                 if (Random.Range((int)0, 2) == 0)
                 {
-                    Instantiate(pizza, new Vector3((Mathf.RoundToInt(xPos * 0.05f) + 5) * 20 + Random.Range(0, 20), Random.Range(10, 20), 0), Quaternion.identity);
+                    Instantiate(pizza, new Vector3((Mathf.RoundToInt(xPos * 0.05f) + modulesBeforeWorld) * 20 + Random.Range(0, 20), Random.Range(10, 20), 0), Quaternion.identity);
                 }
                 else
                 {
-                    Instantiate(jetPack, new Vector3((Mathf.RoundToInt(xPos * 0.05f) + 5) * 20 + Random.Range(0, 20), Random.Range(10, 20), 0), Quaternion.identity);
+                    Instantiate(jetPack, new Vector3((Mathf.RoundToInt(xPos * 0.05f) + modulesBeforeWorld) * 20 + Random.Range(0, 20), Random.Range(10, 20), 0), Quaternion.identity);
                 }
             }
 

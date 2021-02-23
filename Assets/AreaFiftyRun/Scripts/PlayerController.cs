@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
     private ParticleSystem jetPackExhaust;
     private float exhaustEmissionRate;
     [System.NonSerialized] public bool dead;
+    [System.NonSerialized] public bool leftBunker = false;
 
     void Start()
     {
@@ -81,6 +82,10 @@ public class PlayerController : MonoBehaviour
             dead = true;
             //SceneManager.LoadScene(0);//if the wall touches the player, reload the scene
             //loadscene(0) is now called in blackscreen, after fading to black
+        }
+        if (collider.tag == "StartWall")
+        {
+            leftBunker = true;
         }
     }
 

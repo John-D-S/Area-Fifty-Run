@@ -9,6 +9,7 @@ TagManager:
   - JetPack
   - JetPackWearable
   - Gauge
+  - StartWall
   layers:
   - Default
   - TransparentFX
