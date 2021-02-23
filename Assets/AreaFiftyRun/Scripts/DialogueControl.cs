@@ -5,6 +5,7 @@ using TMPro;
 
 public class DialogueControl : MonoBehaviour
 {
+    [SerializeField] private PlayerController playerController;
     [SerializeField] private GameObject player;
 
     [SerializeField] private TextMeshProUGUI playerDialogueText;
@@ -71,12 +72,11 @@ public class DialogueControl : MonoBehaviour
         {
             speechBubble.SetActive(false);
         }  
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.collider.tag == "WallOfDeath")
+
+        if (playerController.dead == true)
         {
             deathBubble.SetActive(true);
         }
     }
+    
 }

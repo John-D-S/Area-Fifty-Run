@@ -12,7 +12,7 @@ public class FadeToBlack : MonoBehaviour
     private PlayerController playerController;
     [SerializeField, Tooltip("the time in seconds that it takes for the screen to fade to black after the player dies")]
     private float fadeToBlackTime = 1;
-    [SerializeField, Tooltip("The ime in seconds that the black screen stays before the level restarts")]
+    [SerializeField, Tooltip("The time in seconds that the black screen stays before the level restarts")]
     private float timeToStayBlack = 3;
 
     //faded becomes true once the screen is completely black
