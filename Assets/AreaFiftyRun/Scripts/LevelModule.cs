@@ -14,6 +14,6 @@ public class LevelModule : MonoBehaviour
     private bool repeatableOnDifferentRows;
     [SerializeField, Tooltip("This module cannot be placed above this height")]
     private int maxHeight;
-    [SerializeField, Tooltip("This module cannot be place below this height")]
+    [SerializeField, Tooltip("This module cannot be placed below this height")]
     private int minHeight;
 }
