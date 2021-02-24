@@ -63,20 +63,24 @@ public class DialogueControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        speechBubbleTimer -= Time.deltaTime;
-        if (speechBubbleTimer > 0)
+        if (playerController.leftBunker == true)
         {
-            speechBubble.SetActive(true);            
+            speechBubbleTimer -= Time.deltaTime;
+            if (speechBubbleTimer > 0)
+            {
+                speechBubble.SetActive(true);
+            }
+            else
+            {
+                speechBubble.SetActive(false);
+            }
         }
-        else 
-        {
-            speechBubble.SetActive(false);
-        }  
 
         if (playerController.dead == true)
         {
             deathBubble.SetActive(true);
         }
     }
+
     
 }
