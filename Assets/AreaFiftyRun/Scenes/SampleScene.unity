@@ -6714,6 +6714,10 @@ PrefabInstance:
       propertyPath: m_fontColor.r
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7221626248673455588, guid: 80d9a13e81162a642ae22733f12af0f8, type: 3}
+      propertyPath: m_SortingOrder
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7221626248673455590, guid: 80d9a13e81162a642ae22733f12af0f8, type: 3}
       propertyPath: m_Name
       value: SpeechBubble
