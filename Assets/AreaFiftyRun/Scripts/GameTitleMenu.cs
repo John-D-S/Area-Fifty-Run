@@ -11,6 +11,13 @@ public class GameTitleMenu : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
+    public void quitGame()
+    {
+        Debug.Log ("Quit");
+        Application.Quit();
+    }
+
+
     // Start is called before the first frame update
     void Start()
     {
