@@ -6,8 +6,17 @@ public class ParallaxProp : MonoBehaviour
 {
     private Vector2 originalPosition;
     private float scale;//a value from 0.1f to 0.9f
-    private int layer;//an int from 0 to 80, representing the order in layer that the sprite is on
     private GameObject camera;
+
+    //these three variables will be used for Background images
+    [SerializeField, Tooltip("if true, scale will be randomized on initialization, Otherwise, it will be set to Default Scale")]
+    private bool randomScale = true;
+    [SerializeField, Tooltip("0 is infinitely far away, 1 is on the player's plane")]
+    private float defaultScale = 0.05f;
+    [SerializeField, Tooltip("if true, the gameobject's scale will be applied to its transform")]
+    private bool applyScaleToTransform = true;
+
+
     [SerializeField]
     private float maxScale = 0.9f;
     [SerializeField]
@@ -18,9 +27,22 @@ public class ParallaxProp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        scale = Random.Range(maxScale, minScale);
-        gameObject.transform.localScale = Vector3.one * scale;
+        if (randomScale)
+        {
+            scale = Random.Range(maxScale, minScale);
+        }
+        else
+        {
+            scale = defaultScale;
+        }
+
+        if (applyScaleToTransform)
+        {
+            gameObject.transform.localScale = Vector3.one * scale;
+        }
+
         //TODO: find a way to add a blue haze to the sprite proportional to its scale, to simulate atmospheric perspective
+
         spriteRenderer.sortingOrder = Mathf.RoundToInt(scale * 100) - 100;
         originalPosition = gameObject.transform.position;
         camera = GameObject.FindGameObjectWithTag("MainCamera");

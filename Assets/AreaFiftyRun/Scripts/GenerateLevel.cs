@@ -57,6 +57,7 @@ public class GenerateLevel : MonoBehaviour
             }
             noOfSpawnedObjects += 1;
         }
+
         if (xPos >= nextBackgroundPrefabXPosition)
         {
             GameObject newBackgroundObj = Instantiate(backgroundPrefabs[0], new Vector3(xPos + 100, 0, 0), Quaternion.identity);
