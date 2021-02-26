@@ -566,6 +566,8 @@ MonoBehaviour:
   seed: 0
   randomizeSeed: 1
   modulesBeforeWorld: 3
+  backgroundPrefabs:
+  - {fileID: 4504248315030164249, guid: c50c1397186a563489b10f6b669a7cc7, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

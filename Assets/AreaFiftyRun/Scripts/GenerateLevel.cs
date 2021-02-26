@@ -20,9 +20,12 @@ public class GenerateLevel : MonoBehaviour
     private bool randomizeSeed = true;
     [SerializeField]
     private int modulesBeforeWorld = 8;
+    [SerializeField]
+    private List<GameObject> backgroundPrefabs;//a list of prefabs that can be spawned in the background
 
     private List<GameObject> spawnedObjects;
     private int noOfSpawnedObjects;
+    private float nextBackgroundPrefabXPosition;
 
     private void Start()
     {
@@ -30,26 +33,13 @@ public class GenerateLevel : MonoBehaviour
         {
             Random.InitState(seed);
         }
-        
-        /* this instantiates 5 random modules infront of the player at start. that is no longer needed, since the bunker now takes their place
-        for (int i = 0; i < modulesBeforeWorld; i++)
-        {
-            if (i == 0) //this if-else statement ensures that the first module is always just the default one. it's probably not the best way of doing it
-            {
-                Instantiate(groundModules[0], new Vector3((float)i * 20, 0), Quaternion.identity);//quaternion.identity is just "quaternion with no rotation"
-            }
-            else
-            {
-                Instantiate(groundModules[Random.Range(0, groundModules.Count)], new Vector3((float)i * 20, 0), Quaternion.identity);
-            }
-        }
-        */
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         float xPos = gameObject.transform.position.x;
+        
         if (xPos * 0.05f> noOfSpawnedObjects)
         {
             Instantiate(groundModules[Random.Range(0, groundModules.Count)], new Vector3((Mathf.RoundToInt(xPos * 0.05f) + 5) * 20, 0), Quaternion.identity);
@@ -65,9 +55,12 @@ public class GenerateLevel : MonoBehaviour
                     Instantiate(jetPack, new Vector3((Mathf.RoundToInt(xPos * 0.05f) + modulesBeforeWorld) * 20 + Random.Range(0, 20), Random.Range(10, 20), 0), Quaternion.identity);
                 }
             }
-
-            
             noOfSpawnedObjects += 1;
-        } 
+        }
+        if (xPos >= nextBackgroundPrefabXPosition)
+        {
+            GameObject newBackgroundObj = Instantiate(backgroundPrefabs[0], new Vector3(xPos + 100, 0, 0), Quaternion.identity);
+            nextBackgroundPrefabXPosition = xPos + Random.Range(1f, 10f);
+        }
     }
 }

@@ -21,13 +21,9 @@ public class ParallaxProp : MonoBehaviour
         scale = Random.Range(maxScale, minScale);
         gameObject.transform.localScale = Vector3.one * scale;
         //TODO: find a way to add a blue haze to the sprite proportional to its scale, to simulate atmospheric perspective
-        spriteRenderer.sortingOrder = Mathf.RoundToInt(scale * 100);
+        spriteRenderer.sortingOrder = Mathf.RoundToInt(scale * 100) - 100;
         originalPosition = gameObject.transform.position;
-    }
-
-    public void SetCamera(GameObject cameraToSet)//This function is called in the script that instantiates this object.
-    {
-        camera = cameraToSet;
+        camera = GameObject.FindGameObjectWithTag("MainCamera");
     }
 
     // Update is called once per frame
