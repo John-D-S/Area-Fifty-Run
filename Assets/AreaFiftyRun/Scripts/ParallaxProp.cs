@@ -6,7 +6,7 @@ public class ParallaxProp : MonoBehaviour
 {
     private Vector2 originalPosition;
     private float scale;//a value from 0.1f to 0.9f
-    private GameObject camera;
+    private GameObject mainCamera;
 
     //these three variables will be used for Background images
     [SerializeField, Tooltip("if true, scale will be randomized on initialization, Otherwise, it will be set to Default Scale")]
@@ -45,15 +45,15 @@ public class ParallaxProp : MonoBehaviour
 
         spriteRenderer.sortingOrder = Mathf.RoundToInt(scale * 100) - 100;
         originalPosition = gameObject.transform.position;
-        camera = GameObject.FindGameObjectWithTag("MainCamera");
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (camera != null)
+        if (mainCamera != null)
         {
-            Vector2 camPos = (Vector2)camera.transform.position; //campos is shorthand for the position of the camera
+            Vector2 camPos = (Vector2)mainCamera.transform.position; //campos is shorthand for the position of the camera
             Vector2 newPosition = (originalPosition - camPos) * scale + camPos;//setting the position of the prop to simulate perspective;
             gameObject.transform.position = newPosition;
         }

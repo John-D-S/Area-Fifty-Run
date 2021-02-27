@@ -60,7 +60,7 @@ public class GenerateLevel : MonoBehaviour
 
         if (xPos >= nextBackgroundPrefabXPosition)
         {
-            GameObject newBackgroundObj = Instantiate(backgroundPrefabs[0], new Vector3(xPos + 100, 0, 0), Quaternion.identity);
+            GameObject newBackgroundObj = Instantiate(backgroundPrefabs[Random.Range(0, backgroundPrefabs.Count)], new Vector3(xPos + 150, 0, 0), Quaternion.identity);
             nextBackgroundPrefabXPosition = xPos + Random.Range(1f, 10f);
         }
     }
