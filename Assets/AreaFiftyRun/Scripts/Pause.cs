@@ -29,10 +29,11 @@ public class Pause : MonoBehaviour
             }
         }
     }
-    public void unpauseGame()
+
+    public void UnpauseGame()
     {
         pauseMenu.SetActive(false);
-        Cursor.visible = false;
+        //Cursor.visible = false;
         gamePaused = false;
         Time.timeScale = 1;
     }

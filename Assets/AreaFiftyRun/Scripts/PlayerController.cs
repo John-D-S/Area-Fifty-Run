@@ -40,12 +40,16 @@ public class PlayerController : MonoBehaviour
     private GameObject jetPackInstance;
     private GameObject jetPackFuelGauge;
     private ParticleSystem jetPackExhaust;
+    private GameObject wallOfDeath;
     private float exhaustEmissionRate;
     [System.NonSerialized] public bool dead;
     [System.NonSerialized] public bool leftBunker = false;
 
     void Start()
     {
+        wallOfDeath = GameObject.FindGameObjectWithTag("WallOfDeath");
+        wallOfDeath.SetActive(false);
+
         rb = gameObject.GetComponent<Rigidbody2D>();
         chCollider = gameObject.GetComponent<Collider2D>();
         movementForce = normalMovementForce;
@@ -86,6 +90,7 @@ public class PlayerController : MonoBehaviour
         if (collider.tag == "StartWall")
         {
             leftBunker = true;
+            wallOfDeath.SetActive(true);
         }
     }
 
