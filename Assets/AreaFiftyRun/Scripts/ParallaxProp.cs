@@ -7,7 +7,8 @@ public class ParallaxProp : MonoBehaviour
     private Vector2 originalPosition;
     private float scale;//a value from 0.1f to 0.9f
     private GameObject mainCamera;
-
+    [SerializeField]
+    Color AtmosphereColor = Color.HSVToRGB(0.55f, 0.25f, 0.75f);
     //these three variables will be used for Background images
     [SerializeField, Tooltip("if true, scale will be randomized on initialization, Otherwise, it will be set to Default Scale")]
     private bool randomScale = true;
@@ -23,6 +24,8 @@ public class ParallaxProp : MonoBehaviour
     private float minScale = 0.1f;
     [SerializeField]
     private SpriteRenderer spriteRenderer; //set this manually in the prefab to avoid using getcomponent
+    [SerializeField]
+    SpriteRenderer atmosphereSpriteRenderer;
 
     // Start is called before the first frame update
     void Start()
@@ -42,8 +45,16 @@ public class ParallaxProp : MonoBehaviour
         }
 
         //TODO: find a way to add a blue haze to the sprite proportional to its scale, to simulate atmospheric perspective
+        atmosphereSpriteRenderer.sprite = spriteRenderer.sprite;
+        atmosphereSpriteRenderer.transform.position = spriteRenderer.transform.position;
+        atmosphereSpriteRenderer.transform.localScale = spriteRenderer.transform.localScale;
 
-        spriteRenderer.sortingOrder = Mathf.RoundToInt(scale * 100) - 100;
+        Color sprColor = atmosphereSpriteRenderer.color;
+        atmosphereSpriteRenderer.color = new Color(sprColor.r, sprColor.g, sprColor.b, Mathf.Abs(scale - 1) * Mathf.Abs(scale - 1)) * 0.75f;
+
+        int spriteSortOrder = (Mathf.RoundToInt(scale * 100) - 100) * 2;
+        spriteRenderer.sortingOrder = spriteSortOrder;
+        atmosphereSpriteRenderer.sortingOrder = spriteSortOrder + 1;
         originalPosition = gameObject.transform.position;
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
     }
