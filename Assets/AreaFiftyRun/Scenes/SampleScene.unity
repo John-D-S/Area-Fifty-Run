@@ -437,6 +437,7 @@ GameObject:
   - component: {fileID: 503983836}
   - component: {fileID: 503983833}
   - component: {fileID: 503983838}
+  - component: {fileID: 503983839}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -597,8 +598,21 @@ MonoBehaviour:
   seed: 0
   randomizeSeed: 1
   modulesBeforeWorld: 3
+--- !u!114 &503983839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 503983832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85fb02061ebde804c91d73d92fe878fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   backgroundPrefabs:
   - {fileID: 4504248315030164249, guid: c50c1397186a563489b10f6b669a7cc7, type: 3}
+  nextBackgroundPrefabXPosition: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

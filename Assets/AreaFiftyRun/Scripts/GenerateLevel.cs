@@ -20,12 +20,9 @@ public class GenerateLevel : MonoBehaviour
     private bool randomizeSeed = true;
     [SerializeField]
     private int modulesBeforeWorld = 8;
-    [SerializeField]
-    private List<GameObject> backgroundPrefabs;//a list of prefabs that can be spawned in the background
 
     private List<GameObject> spawnedObjects;
     private int noOfSpawnedObjects;
-    private float nextBackgroundPrefabXPosition;
 
     private void Start()
     {
@@ -56,12 +53,6 @@ public class GenerateLevel : MonoBehaviour
                 }
             }
             noOfSpawnedObjects += 1;
-        }
-
-        if (xPos >= nextBackgroundPrefabXPosition)
-        {
-            GameObject newBackgroundObj = Instantiate(backgroundPrefabs[Random.Range(0, backgroundPrefabs.Count)], new Vector3(xPos + 150, 0, 0), Quaternion.identity);
-            nextBackgroundPrefabXPosition = xPos + Random.Range(1f, 10f);
         }
     }
 }
