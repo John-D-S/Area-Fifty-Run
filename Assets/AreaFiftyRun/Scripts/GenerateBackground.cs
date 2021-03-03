@@ -10,11 +10,6 @@ public class GenerateBackground : MonoBehaviour
     
     private float nextBackgroundPrefabXPosition;
 
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {

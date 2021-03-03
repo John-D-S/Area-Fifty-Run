@@ -21,6 +21,10 @@ public class GenerateLevel : MonoBehaviour
     [SerializeField]
     private int modulesBeforeWorld = 8;
 
+    //biome stuff
+    //
+
+
     private List<GameObject> spawnedObjects;
     private int noOfSpawnedObjects;
 

@@ -6,28 +6,15 @@ using UnityEngine;
 public class GameTitleMenu : MonoBehaviour
 {
     
-    public void startGame()
+    public void StartGame()
     {
         SceneManager.LoadScene(0);
     }
 
-    public void quitGame()
+    public void QuitGame()
     {
         Debug.Log ("Quit");
         Application.Quit();
-    }
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
 }
