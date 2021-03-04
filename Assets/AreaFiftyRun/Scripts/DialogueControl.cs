@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+
 public class DialogueControl : MonoBehaviour
 {
     [SerializeField] private PlayerController playerController;
-    [SerializeField] private GameObject player;
-
+   
     [SerializeField] private TextMeshProUGUI playerDialogueText;
     [SerializeField] private TextMeshProUGUI playerDeathText;
+
+    [SerializeField] private AudioSource source;
+
+
 
     [SerializeField] private string[] playerStartSentences = new string[] 
     {
@@ -65,6 +69,8 @@ public class DialogueControl : MonoBehaviour
     {
         if (playerController.leftBunker == true)
         {
+            if(!source.isPlaying)
+                source.Play();
             speechBubbleTimer -= Time.deltaTime;
             if (speechBubbleTimer > 0)
             {
