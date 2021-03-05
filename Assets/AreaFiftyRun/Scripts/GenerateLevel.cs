@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class GenerateLevel : MonoBehaviour
 {
-    [SerializeField, Tooltip("These are a list of the biomes and their settings")]
-    private List<BiomeGeneration> Biomes;
+    [SerializeField]
+    private List<GameObject> groundModules;
+    [SerializeField]
+    private List<GameObject> floatingModules;
     [SerializeField]
     private int powerUpChance;
     [SerializeField]
@@ -19,15 +21,12 @@ public class GenerateLevel : MonoBehaviour
     [SerializeField]
     private int modulesBeforeWorld = 8;
 
-    private BiomeGeneration currentBiome;
+    //biome stuff
+    //
+
 
     private List<GameObject> spawnedObjects;
     private int noOfSpawnedObjects;
-
-    private BiomeGeneration GetNextBiomeGen(BiomeGeneration _currentBiome)//choose a random biomegeneration from biomes within the available NextBiomes in _currentBiome
-    {
-
-    }
 
     private void Start()
     {
