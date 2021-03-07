@@ -43,6 +43,10 @@ public class GenerateLevel : MonoBehaviour
     private Biome currentBiome;
     [SerializeField]
     private int modulesBeforeWorld = 8;
+    [SerializeField]
+    private int minimumModulesPerBiome = 100;
+    [SerializeField]
+    private int maximumModulesPerBiome = 200;
 
     private BiomeLevelGeneration currentBiomeGeneration;
     private List<GameObject> spawnedObjects;
@@ -53,6 +57,7 @@ public class GenerateLevel : MonoBehaviour
     [SerializeField]
     private List<BiomeBackgroundGeneration> backgroundBiomes = new List<BiomeBackgroundGeneration>(7);
     [SerializeField]
+    private SpriteRenderer BackgroundGround;
 
     private BiomeBackgroundGeneration currentBackgroundBiome;
     private float nextBackgroundPrefabXPosition;
@@ -90,16 +95,6 @@ public class GenerateLevel : MonoBehaviour
         return new Vector2(xPosition, 20);
     }
 
-    private void Start()
-    {
-        modulesUntilNextBiome = 100 + Random.Range(0, 100);
-        currentBiomeGeneration = levelBiomes[(int)currentBiome];
-        currentBackgroundBiome = backgroundBiomes[(int)currentBiome];
-        if (!randomizeSeed)
-        {
-            Random.InitState(seed);
-        }
-    }
 
     void GenerateBackground()
     {
@@ -112,9 +107,26 @@ public class GenerateLevel : MonoBehaviour
         }
     }
 
+    //call this whenever we need to change the biome, or when we need to start the game
+    void UpdateGenerationVariables()
+    {
+        BackgroundGround.color = backgroundBiomes[(int)currentBiome].backgroundGroundColor;//set the colour of the ground in the background to the correct colour
+        modulesUntilNextBiome = minimumModulesPerBiome + Random.Range(0, maximumModulesPerBiome - minimumModulesPerBiome);//
+        currentBiomeGeneration = levelBiomes[(int)currentBiome];
+        currentBackgroundBiome = backgroundBiomes[(int)currentBiome];
+    }
+
     //create a void GenerateLevel()? idk
 
-    // Update is called once per frame
+    private void Start()
+    {
+        UpdateGenerationVariables();
+        if (!randomizeSeed)
+        {
+            Random.InitState(seed);
+        }
+    }
+
     void FixedUpdate()
     {
         float xPos = gameObject.transform.position.x;
@@ -122,8 +134,7 @@ public class GenerateLevel : MonoBehaviour
         if(modulesUntilNextBiome <= 0)
         {
             currentBiome = GetNextBiome();
-            currentBiomeGeneration = levelBiomes[(int)currentBiome];
-            currentBackgroundBiome = backgroundBiomes[(int)currentBiome];
+            UpdateGenerationVariables();
         }
 
         GenerateBackground();
