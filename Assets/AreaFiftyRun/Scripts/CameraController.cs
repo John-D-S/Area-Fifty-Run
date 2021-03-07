@@ -9,6 +9,7 @@ public class CameraController : MonoBehaviour
 
     void FixedUpdate()
     {
+        
         gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, player.transform.position + Vector3.back, lerpTime);
     }
 }
