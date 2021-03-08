@@ -23,6 +23,9 @@ public class PlayerController : MonoBehaviour
     private float jetPackForce = 20;
     [SerializeField, Tooltip("The wearable jetpack prefab that the player will wear while the jetpack is active")]
     private GameObject jetPack;
+
+    [SerializeField]
+    private AudioSource jumpSound;
     
 
     //how many jumps the player is able to make right now before they land back on the ground
@@ -202,12 +205,15 @@ public class PlayerController : MonoBehaviour
             {
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
                 rb.AddForce(groundNormal.normalized * jumpForce, ForceMode2D.Impulse);
+                jumpSound.Play();
             }
             else if (jumpsRemaining < maxJumpsRemaining)
             {
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+                jumpSound.Play();
             }
             rb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
+            jumpSound.Play();
             jumpsRemaining -= 1;
             exhaustEmissionRate = 0;
         }
