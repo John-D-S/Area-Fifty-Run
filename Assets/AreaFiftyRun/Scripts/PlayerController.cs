@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private AudioSource jumpSound;
+    [SerializeField]
+    private AudioSource jetpackSound;
     
 
     //how many jumps the player is able to make right now before they land back on the ground
@@ -198,6 +200,7 @@ public class PlayerController : MonoBehaviour
             jetPackFuel -= Time.deltaTime;
             UpdateJetpackFuelGuage();
             exhaustEmissionRate = 300;
+            jetpackSound.Play();
         }
         else if(JumpPressedThisFrame() && jumpsRemaining > 0)//jumping and doublejumping
         {
