@@ -13,6 +13,13 @@ public enum Biome
     industrial
 }
 
+public enum GroundAngle
+{
+    incline,
+    flat,
+    decline
+}
+
 public class GenerateLevel : MonoBehaviour
 {
     [System.Serializable]
@@ -22,7 +29,9 @@ public class GenerateLevel : MonoBehaviour
         public Biome biome;
         [Tooltip("These are the biomes that this Biome can lead into.")]
         public List<Biome> possibleNextBiomes;
-        public List<GameObject> groundModules;
+        public List<GameObject> inclineGroundModules;
+        public List<GameObject> flatGroundModules;
+        public List<GameObject> declineGroundModules;
         public List<GameObject> propModules;
         [Range(0, 1), Tooltip("The probability as a percentage that a prop will spawn on a given module")]
         public float propChance;
@@ -47,11 +56,14 @@ public class GenerateLevel : MonoBehaviour
     private int minimumModulesPerBiome = 100;
     [SerializeField]
     private int maximumModulesPerBiome = 200;
+    [SerializeField]
+    private int maximumModuleHeight;
 
     private BiomeLevelGeneration currentBiomeGeneration;
     private List<GameObject> spawnedObjects;
     private int noOfSpawnedModules;
     private int modulesUntilNextBiome;
+    private int currentModuleHeight = 0;
 
     [Header("Background Generation")]
     [SerializeField]
@@ -84,17 +96,27 @@ public class GenerateLevel : MonoBehaviour
         return nextBiome;   
     }
 
+    private List<Vector2> rayStartPositions = new List<Vector2>();
+    //private List<Vector2> rayDirections = new List<Vector2>();
+
     private Vector2 GroundPosition(float xPosition)
     {
         Vector2 rayStartPosition = new Vector2(xPosition, 50);
-        var ray = Physics2D.Raycast(rayStartPosition, rayStartPosition - Vector2.down);
+        //Vector2 rayDirection = new Vector2(xPosition, 49);
+        var ray = Physics2D.Raycast(rayStartPosition, Vector2.down);
+        rayStartPositions.Add(rayStartPosition);
+        //rayDirections.Add(rayDirection);
+        //Debug.DrawRay(rayStartPosition, rayStartPosition - Vector2.down);
         if (ray.collider != null)
         {
             return new Vector2(xPosition, ray.point.y); 
         }
-        return new Vector2(xPosition, 20);
+        else
+        {
+            return new Vector2(xPosition, 20);
+        }
+        
     }
-
 
     void GenerateBackground()
     {
@@ -143,7 +165,31 @@ public class GenerateLevel : MonoBehaviour
         {
             float moduleXPosition = (Mathf.RoundToInt(xPos * 0.05f) + modulesBeforeWorld) * 20;
             //instantiate a ground module.
-            Instantiate(currentBiomeGeneration.groundModules[Random.Range(0, currentBiomeGeneration.groundModules.Count)], new Vector3(moduleXPosition, 0f), Quaternion.identity);
+
+            GroundAngle angle = (GroundAngle)Random.Range(0,3);//choose a random angle.
+            if (currentModuleHeight >= maximumModuleHeight && angle == GroundAngle.incline)//switch from incline to either flat or decline if already at or above max height to avoid exceeding it.
+            {
+                angle = (GroundAngle)Random.Range(1, 3);
+            }
+            else if (currentModuleHeight <= 0 && angle == GroundAngle.decline)//switch from decline to either flat or incline if already at or below 0 height
+            {
+                angle = (GroundAngle)Random.Range(0, 2);
+            }
+
+            switch (angle)
+            {
+                case GroundAngle.incline:
+                    Instantiate(currentBiomeGeneration.inclineGroundModules[Random.Range(0, currentBiomeGeneration.inclineGroundModules.Count)], new Vector2(moduleXPosition, currentModuleHeight * 5f), Quaternion.identity);
+                    currentModuleHeight++; //instantiate a random incline module and increase the current height by one
+                    break;
+                case GroundAngle.flat:
+                    Instantiate(currentBiomeGeneration.flatGroundModules[Random.Range(0, currentBiomeGeneration.flatGroundModules.Count)], new Vector2(moduleXPosition, currentModuleHeight * 5f), Quaternion.identity);
+                    break;
+                case GroundAngle.decline:
+                    Instantiate(currentBiomeGeneration.declineGroundModules[Random.Range(0, currentBiomeGeneration.declineGroundModules.Count)], new Vector2(moduleXPosition, currentModuleHeight * 5f), Quaternion.identity);
+                    currentModuleHeight--; //instantiate a random decline module and decrease the current height by one
+                    break;
+            }
 
             if (Random.Range(0, 1) < currentBiomeGeneration.propChance)
             {
@@ -168,5 +214,14 @@ public class GenerateLevel : MonoBehaviour
             noOfSpawnedModules ++;
             modulesUntilNextBiome --;
         }
+        ///*
+        foreach(Vector2 rayStartPosition in rayStartPositions)
+        {
+
+            Debug.DrawRay(rayStartPosition, Vector2.down);  
+
+        }
+        //*/
+
     }
 }

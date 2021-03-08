@@ -45,7 +45,6 @@ public class ParallaxProp : MonoBehaviour
         }
 
         //TODO: find a way to add a blue haze to the sprite proportional to its scale, to simulate atmospheric perspective
-        atmosphereSpriteRenderer.sprite = spriteRenderer.sprite;
         atmosphereSpriteRenderer.transform.position = spriteRenderer.transform.position;
         atmosphereSpriteRenderer.transform.localScale = spriteRenderer.transform.localScale;
 
