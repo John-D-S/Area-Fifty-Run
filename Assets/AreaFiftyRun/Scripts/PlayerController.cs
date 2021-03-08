@@ -196,11 +196,11 @@ public class PlayerController : MonoBehaviour
         //using Jetpack
         if (Input.GetAxis("Jump") > 0 && jetPackFuel > 0 && timeSinceLeftGround > 0.25f)
         {
+            jetpackSound.Play();
             rb.AddForce(Vector3.up * jetPackForce, ForceMode2D.Force);
             jetPackFuel -= Time.deltaTime;
             UpdateJetpackFuelGuage();
             exhaustEmissionRate = 300;
-            jetpackSound.Play();
         }
         else if(JumpPressedThisFrame() && jumpsRemaining > 0)//jumping and doublejumping
         {
