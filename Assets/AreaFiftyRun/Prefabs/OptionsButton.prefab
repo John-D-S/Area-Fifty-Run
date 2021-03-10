@@ -393,6 +393,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3715203933726374282}
   - component: {fileID: 3715203933726374325}
+  - component: {fileID: 4587653185167998350}
   m_Layer: 5
   m_Name: VolumeSlider
   m_TagString: Untagged
@@ -474,6 +475,20 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4587653185167998350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3715203933726374283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75d3dd118de628d4897e9a9c3be5d475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  group: {fileID: 24100000, guid: 2d7180b800c043044ad363149d715edd, type: 2}
+  volumeParameter: BGMVol
 --- !u!1 &3715203933796043990
 GameObject:
   m_ObjectHideFlags: 0
@@ -1502,6 +1517,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3715203934598159654}
   - component: {fileID: 3715203934598159649}
+  - component: {fileID: 1678331586939242607}
   m_Layer: 5
   m_Name: SFXSlider
   m_TagString: Untagged
@@ -1583,6 +1599,20 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1678331586939242607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3715203934598159655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75d3dd118de628d4897e9a9c3be5d475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  group: {fileID: 24100000, guid: 2d7180b800c043044ad363149d715edd, type: 2}
+  volumeParameter: SFXVol
 --- !u!1 &3715203934701930835
 GameObject:
   m_ObjectHideFlags: 0
