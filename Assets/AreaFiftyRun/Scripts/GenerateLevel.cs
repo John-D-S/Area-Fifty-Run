@@ -81,10 +81,10 @@ public class GenerateLevel : MonoBehaviour
     private bool randomizeSeed = true;
 
     [Header("PowerUps and Collectables")]//variables to do with placing powerups
-    [SerializeField, Tooltip("The probability as a percentage that a powerup will spawn on a given module")]
+    [SerializeField, Range(0, 1),Tooltip("The probability as a percentage that a powerup will spawn on a given module")]
     private float powerUpChance;
     [SerializeField]
-    private GameObject pizza;
+    private GameObject SpeedBoost;
     [SerializeField]
     private GameObject jetPack;
     
@@ -191,21 +191,34 @@ public class GenerateLevel : MonoBehaviour
                     break;
             }
 
-            if (Random.Range(0, 1) < currentBiomeGeneration.propChance)
+            bool spawnProp = Random.Range(0f, 1f) < currentBiomeGeneration.propChance;
+            float groundHeight = GroundPosition(moduleXPosition).y;
+            if (spawnProp)
             {
                 Instantiate(currentBiomeGeneration.propModules[Random.Range(0, currentBiomeGeneration.propModules.Count)], GroundPosition(moduleXPosition), Quaternion.identity);
             }
 
-            if (Random.Range(0, 1) < powerUpChance)
+            if (spawnProp && Random.Range(0f, 1f) < powerUpChance)
             {
-                float powerUpXPosition = moduleXPosition + Random.Range(0, 20);
-                if (Random.Range((int)0, 2) == 0)
+                float powerUpYPosition;
+                float powerUpXPosition = moduleXPosition + Random.Range(-10, 10);
+                if (GroundPosition(powerUpXPosition).y < groundHeight + 6f) // if powerUpXPosition is not on a module,
                 {
-                    Instantiate(pizza, GroundPosition(powerUpXPosition), Quaternion.identity);
+                    powerUpYPosition = groundHeight + Random.Range(10f, 15f); //spawn it in the air.
                 }
                 else
                 {
-                    Instantiate(jetPack, GroundPosition(powerUpXPosition), Quaternion.identity);
+                    powerUpYPosition = GroundPosition(powerUpXPosition).y + 1;//otherwise, spawn it on top of the module
+                }
+                Vector2 PowerUpPosition = new Vector2(powerUpXPosition, powerUpYPosition);
+
+                if (Random.Range(0, 2) == 0)
+                {
+                    Instantiate(SpeedBoost, PowerUpPosition, Quaternion.identity);
+                }
+                else
+                {
+                    Instantiate(jetPack, PowerUpPosition, Quaternion.identity);
                 }
             }
             noOfSpawnedModules ++;
