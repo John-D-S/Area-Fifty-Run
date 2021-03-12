@@ -868,6 +868,7 @@ MonoBehaviour:
     - {fileID: 1764855818094224336, guid: 84ca4d76ce8d204469df43d6602314fa, type: 3}
     - {fileID: 7378592448046357554, guid: f699e2cc204b2d544b80e799f9e9dfb9, type: 3}
     - {fileID: 4463262977756991392, guid: 32edfa021a406ce4c89025f38f527380, type: 3}
+    - {fileID: 2564878739170317944, guid: cd1bf75f6471c27408919eff458708a0, type: 3}
     propChance: 0.608
   - biome: 0
     possibleNextBiomes: 
@@ -919,6 +920,9 @@ MonoBehaviour:
   backgroundBiomes:
   - backgroundPrefabs:
     - {fileID: 562969372178024262, guid: 89fc19fee064f7f44bde0a3a007944a2, type: 3}
+    - {fileID: 3468132868803562049, guid: ada55f138cb89fe43a8b584c11fec4d4, type: 3}
+    - {fileID: 1416300566769953608, guid: 8262ac2f5570e5d4c87966a84a28d536, type: 3}
+    - {fileID: 8539301445387962556, guid: 04b56445f02e9294ab6ee346a16d8602, type: 3}
     backGroundGround: {fileID: 440756479}
     backgroundGroundColor: {r: 0.8867924, g: 0.6471032, b: 0.4224813, a: 1}
   - backgroundPrefabs: []
@@ -1500,7 +1504,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 24300002, guid: 9ed59822b21aaaa41bb5dd4c5e34ec34, type: 2}
   m_audioClip: {fileID: 8300000, guid: 7a6989291284b254ea2518b2670d581d, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.898
+  m_Volume: 0
   m_Pitch: 1.13
   Loop: 1
   Mute: 0

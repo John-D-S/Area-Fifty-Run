@@ -45,8 +45,8 @@ public class ParallaxProp : MonoBehaviour
         }
 
         //TODO: find a way to add a blue haze to the sprite proportional to its scale, to simulate atmospheric perspective
-        atmosphereSpriteRenderer.transform.position = spriteRenderer.transform.position;
-        atmosphereSpriteRenderer.transform.localScale = spriteRenderer.transform.localScale;
+        //atmosphereSpriteRenderer.transform.position = spriteRenderer.transform.position;
+        //atmosphereSpriteRenderer.transform.localScale = spriteRenderer.transform.localScale;
 
         Color sprColor = atmosphereSpriteRenderer.color;
         atmosphereSpriteRenderer.color = new Color(sprColor.r, sprColor.g, sprColor.b, Mathf.Abs(scale - 1) * Mathf.Abs(scale - 1)) * 0.75f;

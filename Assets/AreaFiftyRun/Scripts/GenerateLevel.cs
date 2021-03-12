@@ -193,10 +193,7 @@ public class GenerateLevel : MonoBehaviour
 
             if (Random.Range(0, 1) < currentBiomeGeneration.propChance)
             {
-                float propXPosition = Random.Range(0f, 20f);
-
-                Vector2 rayStartPosition = new Vector2(moduleXPosition + propXPosition, 20);
-                Instantiate(currentBiomeGeneration.propModules[Random.Range(0, currentBiomeGeneration.propModules.Count)], GroundPosition(moduleXPosition + propXPosition), Quaternion.identity);
+                Instantiate(currentBiomeGeneration.propModules[Random.Range(0, currentBiomeGeneration.propModules.Count)], GroundPosition(moduleXPosition), Quaternion.identity);
             }
 
             if (Random.Range(0, 1) < powerUpChance)
@@ -214,14 +211,6 @@ public class GenerateLevel : MonoBehaviour
             noOfSpawnedModules ++;
             modulesUntilNextBiome --;
         }
-        ///*
-        foreach(Vector2 rayStartPosition in rayStartPositions)
-        {
-
-            Debug.DrawRay(rayStartPosition, Vector2.down);  
-
-        }
-        //*/
 
     }
 }
