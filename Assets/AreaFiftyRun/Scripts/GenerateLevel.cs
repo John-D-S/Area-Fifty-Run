@@ -193,9 +193,14 @@ public class GenerateLevel : MonoBehaviour
 
             bool spawnProp = Random.Range(0f, 1f) < currentBiomeGeneration.propChance;
             float groundHeight = GroundPosition(moduleXPosition).y;
+            
             if (spawnProp)
             {
-                Instantiate(currentBiomeGeneration.propModules[Random.Range(0, currentBiomeGeneration.propModules.Count)], GroundPosition(moduleXPosition), Quaternion.identity);
+                int noOfProps = Random.Range(1, 3);
+                for (int i = 0; i < noOfProps; i++)
+                {
+                    Instantiate(currentBiomeGeneration.propModules[Random.Range(0, currentBiomeGeneration.propModules.Count)], GroundPosition(moduleXPosition), Quaternion.identity);
+                }
             }
 
             if (spawnProp && Random.Range(0f, 1f) < powerUpChance)
