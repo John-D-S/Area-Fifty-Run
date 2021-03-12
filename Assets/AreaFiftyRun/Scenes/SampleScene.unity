@@ -856,6 +856,9 @@ MonoBehaviour:
     - {fileID: 1578873848035185762, guid: 29f6c3e7d42246e4f94d0ea6daf8e57f, type: 3}
     - {fileID: 6248854039302831706, guid: 0bd84c95e38e87149bfbc79166df1e25, type: 3}
     - {fileID: 5622172529629400542, guid: 2581e90593aa71940af41b54d3422fd7, type: 3}
+    - {fileID: 9128055682027165047, guid: e3fb17556f8f0324786b0e0413631278, type: 3}
+    - {fileID: 5191995487329509190, guid: c2c8d17513ee7084884e3c1fc0942b64, type: 3}
+    - {fileID: 6365576237513026296, guid: 7aadb119ed0bcaa49a2045914c88a52a, type: 3}
     flatGroundModules:
     - {fileID: 9128055682027165047, guid: e3fb17556f8f0324786b0e0413631278, type: 3}
     - {fileID: 5191995487329509190, guid: c2c8d17513ee7084884e3c1fc0942b64, type: 3}
@@ -864,6 +867,9 @@ MonoBehaviour:
     - {fileID: 8657948016992942131, guid: 710d295887fc0e847a69cd8d6d9ef650, type: 3}
     - {fileID: 6722871661432724947, guid: 90630fc9166f2174498f35f97a925962, type: 3}
     - {fileID: 5231359052287356437, guid: 46ad3e3420d817b429a304a13b10e6e9, type: 3}
+    - {fileID: 9128055682027165047, guid: e3fb17556f8f0324786b0e0413631278, type: 3}
+    - {fileID: 5191995487329509190, guid: c2c8d17513ee7084884e3c1fc0942b64, type: 3}
+    - {fileID: 6365576237513026296, guid: 7aadb119ed0bcaa49a2045914c88a52a, type: 3}
     propModules:
     - {fileID: 1764855818094224336, guid: 84ca4d76ce8d204469df43d6602314fa, type: 3}
     - {fileID: 7378592448046357554, guid: f699e2cc204b2d544b80e799f9e9dfb9, type: 3}
@@ -946,8 +952,8 @@ MonoBehaviour:
   BackgroundGround: {fileID: 440756481}
   seed: 0
   randomizeSeed: 1
-  powerUpChance: 4
-  pizza: {fileID: 3266469468296237770, guid: f14acf69c52382546aa399d484b72fc2, type: 3}
+  powerUpChance: 0.5
+  SpeedBoost: {fileID: 3266469468296237770, guid: f14acf69c52382546aa399d484b72fc2, type: 3}
   jetPack: {fileID: 6080827167791646421, guid: 821c8d518e33f434c8254bf7a97265d0, type: 3}
 --- !u!1 &519420028
 GameObject:
@@ -2081,7 +2087,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 15
-  doNotMove: 1
+  doNotMove: 0
   player: {fileID: 503983833}
 --- !u!199 &1648441199
 ParticleSystemRenderer:

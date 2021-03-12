@@ -224,6 +224,5 @@ public class GenerateLevel : MonoBehaviour
             noOfSpawnedModules ++;
             modulesUntilNextBiome --;
         }
-
     }
 }
