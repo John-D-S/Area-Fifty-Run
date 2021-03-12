@@ -2087,6 +2087,7 @@ MonoBehaviour:
   - {fileID: 1990258053306904478, guid: 5573cee9ba15bff44baeed90f06c4ec2, type: 3}
   - {fileID: 3899322138983391532, guid: da240c4627f8d234280e248ea7462adb, type: 3}
   - {fileID: 7769449507648023494, guid: 82ea5277a84aa6140b56a19e0a3d8778, type: 3}
+  - {fileID: 1354741057375712952, guid: 3fdcd84c388248b46a9663b059ea6be7, type: 3}
   floatingModules:
   - {fileID: 8706712902860862368, guid: 0b6ba63b5ff7e954d87d9c79dae3676a, type: 3}
   - {fileID: 3914780363440483722, guid: 91b948c7cf916a14888bbcf159da0711, type: 3}
