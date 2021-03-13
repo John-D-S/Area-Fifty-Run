@@ -123,6 +123,36 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &10026256
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 10026257}
+  m_Layer: 0
+  m_Name: Wall
+  m_TagString: WallOfDeath
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &10026257
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10026256}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1648441196}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &96934322
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,7 +182,7 @@ Transform:
   m_LocalScale: {x: 0.02755047, y: 0.07839651, z: 3.8956726}
   m_Children: []
   m_Father: {fileID: 1648441196}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &96934324
 SpriteRenderer:
@@ -512,7 +542,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cb53003f1639ff47967d99d9f865957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HorizonDistance: 0.95
+  HorizonDistance: 0.975
   GroundWidth: 50
 --- !u!212 &440756481
 SpriteRenderer:
@@ -553,7 +583,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -182
+  m_SortingOrder: -1002
   m_Sprite: {fileID: 21300000, guid: ab5b927df03bad44ba0b8adddbfd2baf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -929,27 +959,39 @@ MonoBehaviour:
     - {fileID: 3468132868803562049, guid: ada55f138cb89fe43a8b584c11fec4d4, type: 3}
     - {fileID: 1416300566769953608, guid: 8262ac2f5570e5d4c87966a84a28d536, type: 3}
     - {fileID: 8539301445387962556, guid: 04b56445f02e9294ab6ee346a16d8602, type: 3}
+    farBackgroundPrefabs:
+    - {fileID: 8750233878826932956, guid: b51534ea398084342928a35ef8502e0d, type: 3}
     backGroundGround: {fileID: 440756479}
     backgroundGroundColor: {r: 0.8867924, g: 0.6471032, b: 0.4224813, a: 1}
   - backgroundPrefabs: []
+    farBackgroundPrefabs: []
     backGroundGround: {fileID: 0}
     backgroundGroundColor: {r: 0, g: 0, b: 0, a: 0}
   - backgroundPrefabs: []
+    farBackgroundPrefabs: []
     backGroundGround: {fileID: 0}
     backgroundGroundColor: {r: 0, g: 0, b: 0, a: 0}
   - backgroundPrefabs: []
+    farBackgroundPrefabs: []
     backGroundGround: {fileID: 0}
     backgroundGroundColor: {r: 0, g: 0, b: 0, a: 0}
   - backgroundPrefabs: []
+    farBackgroundPrefabs: []
     backGroundGround: {fileID: 0}
     backgroundGroundColor: {r: 0, g: 0, b: 0, a: 0}
   - backgroundPrefabs: []
+    farBackgroundPrefabs: []
     backGroundGround: {fileID: 0}
     backgroundGroundColor: {r: 0, g: 0, b: 0, a: 0}
   - backgroundPrefabs: []
+    farBackgroundPrefabs: []
     backGroundGround: {fileID: 0}
     backgroundGroundColor: {r: 0, g: 0, b: 0, a: 0}
   BackgroundGround: {fileID: 440756481}
+  backgroundPrefabMinDistance: 1
+  backgroundPrefabMaxDistance: 10
+  farBackgroundPrefabMinDistance: 50
+  farBackgroundPrefabMaxDistance: 200
   seed: 0
   randomizeSeed: 1
   powerUpChance: 0.5
@@ -1834,7 +1876,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -181
+  m_SortingOrder: -1001
   m_Sprite: {fileID: 21300000, guid: f49e383be5312fd47979697e2c68c98b, type: 3}
   m_Color: {r: 0.5790762, g: 0.6622404, b: 0.7264151, a: 1}
   m_FlipX: 0
@@ -2040,9 +2082,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1648441194}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -150, y: 10, z: 0}
-  m_LocalScale: {x: 50, y: 50, z: 1}
+  m_LocalPosition: {x: -250, y: 10, z: 0}
+  m_LocalScale: {x: 100, y: 100, z: 1}
   m_Children:
+  - {fileID: 10026257}
   - {fileID: 96934323}
   - {fileID: 2112231715}
   m_Father: {fileID: 0}
@@ -7104,7 +7147,7 @@ Transform:
   m_LocalScale: {x: 0.23488608, y: 0.072389804, z: 28.5}
   m_Children: []
   m_Father: {fileID: 1648441196}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -22.2}
 --- !u!212 &2112231716
 SpriteRenderer:

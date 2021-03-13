@@ -14,6 +14,8 @@ public class ParallaxProp : MonoBehaviour
     private bool randomScale = true;
     [SerializeField, Tooltip("0 is infinitely far away, 1 is on the player's plane")]
     private float defaultScale = 0.05f;
+    [SerializeField, Tooltip("Good for mountains and stuff.")]
+    private float sizeMultiplier = 1;
     [SerializeField, Tooltip("if true, the gameobject's scale will be applied to its transform")]
     private bool applyScaleToTransform = true;
 
@@ -41,7 +43,7 @@ public class ParallaxProp : MonoBehaviour
 
         if (applyScaleToTransform)
         {
-            gameObject.transform.localScale = Vector3.one * scale;
+            gameObject.transform.localScale = Vector3.one * scale * sizeMultiplier;
         }
 
         //TODO: find a way to add a blue haze to the sprite proportional to its scale, to simulate atmospheric perspective
@@ -49,9 +51,9 @@ public class ParallaxProp : MonoBehaviour
         //atmosphereSpriteRenderer.transform.localScale = spriteRenderer.transform.localScale;
 
         Color sprColor = atmosphereSpriteRenderer.color;
-        atmosphereSpriteRenderer.color = new Color(sprColor.r, sprColor.g, sprColor.b, Mathf.Abs(scale - 1) * Mathf.Abs(scale - 1)) * 0.75f;
+        atmosphereSpriteRenderer.color = new Color(sprColor.r, sprColor.g, sprColor.b, Mathf.Abs(scale - 1) * Mathf.Abs(scale - 1)) * 0.5f;
 
-        int spriteSortOrder = (Mathf.RoundToInt(scale * 100) - 100) * 2;
+        int spriteSortOrder = (Mathf.RoundToInt(scale * 500) - 500) * 2;
         spriteRenderer.sortingOrder = spriteSortOrder;
         atmosphereSpriteRenderer.sortingOrder = spriteSortOrder + 1;
         originalPosition = gameObject.transform.position;

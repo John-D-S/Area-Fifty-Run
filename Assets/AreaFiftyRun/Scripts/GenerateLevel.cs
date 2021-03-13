@@ -40,7 +40,10 @@ public class GenerateLevel : MonoBehaviour
     [System.Serializable]
     public struct BiomeBackgroundGeneration
     {
+        [Tooltip("For things that appear coser to the camera in the background like rocks and plants")]
         public List<GameObject> backgroundPrefabs;//a list of prefabs that can be spawned in the background
+        [Tooltip("For things like mountains and skylines that appear far in the distance")]
+        public List<GameObject> farBackgroundPrefabs;//a list of prefabs that can be spawned far in the distance (like mountains and skylines)
         public GameObject backGroundGround;
         public Color backgroundGroundColor;
     }
@@ -70,9 +73,18 @@ public class GenerateLevel : MonoBehaviour
     private List<BiomeBackgroundGeneration> backgroundBiomes = new List<BiomeBackgroundGeneration>(7);
     [SerializeField]
     private SpriteRenderer BackgroundGround;
+    [SerializeField, Tooltip("The minimum distance background prefabs can be away from each other")]
+    private float backgroundPrefabMinDistance = 1;
+    [SerializeField, Tooltip("The Maximum distance background prefabs can be away from each other")]
+    private float backgroundPrefabMaxDistance = 10;
+    [SerializeField, Tooltip("The Minimum distance distant background prefabs can be away from each other")]
+    private float farBackgroundPrefabMinDistance = 10;
+    [SerializeField, Tooltip("The Maximum distance distant background prefabs can be away from each other")]
+    private float farBackgroundPrefabMaxDistance = 100;
 
     private BiomeBackgroundGeneration currentBackgroundBiome;
     private float nextBackgroundPrefabXPosition;
+    private float nextFarBackgrounPrefabXPosition;
 
     [Header("Level Seed")]//variables to do with creating a seed for Random
     [SerializeField]
@@ -115,17 +127,21 @@ public class GenerateLevel : MonoBehaviour
         {
             return new Vector2(xPosition, 20);
         }
-        
     }
 
     void GenerateBackground()
     {
         float xPos = Camera.main.transform.position.x;
 
-        if (xPos >= nextBackgroundPrefabXPosition)
+        if (xPos >= nextBackgroundPrefabXPosition && currentBackgroundBiome.backgroundPrefabs.Count != 0)
         {
-            GameObject newBackgroundObj = Instantiate(currentBackgroundBiome.backgroundPrefabs[Random.Range(0, currentBackgroundBiome.backgroundPrefabs.Count)], new Vector3(xPos + 150, 0, 0), Quaternion.identity);
-            nextBackgroundPrefabXPosition = xPos + Random.Range(1f, 10f);
+            Instantiate(currentBackgroundBiome.backgroundPrefabs[Random.Range(0, currentBackgroundBiome.backgroundPrefabs.Count)], new Vector3(xPos + 150, 0, 0), Quaternion.identity);
+            nextBackgroundPrefabXPosition = xPos + Random.Range(backgroundPrefabMinDistance, backgroundPrefabMaxDistance);
+        }
+        if (xPos >= nextFarBackgrounPrefabXPosition && currentBackgroundBiome.farBackgroundPrefabs.Count != 0)
+        {
+            Instantiate(currentBackgroundBiome.farBackgroundPrefabs[Random.Range(0, currentBackgroundBiome.farBackgroundPrefabs.Count)], new Vector3(xPos + 500, 0, 0), Quaternion.identity);
+            nextFarBackgrounPrefabXPosition = xPos + Random.Range(farBackgroundPrefabMinDistance, farBackgroundPrefabMaxDistance);
         }
     }
 
