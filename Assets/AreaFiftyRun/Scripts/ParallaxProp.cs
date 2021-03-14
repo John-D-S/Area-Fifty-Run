@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ParallaxProp : MonoBehaviour
 {
+    private static int lastSpriteSortOrder = 0;
+
     private Vector2 originalPosition;
     private float scale;//a value from 0.1f to 0.9f
     private GameObject mainCamera;
@@ -29,12 +31,21 @@ public class ParallaxProp : MonoBehaviour
     [SerializeField]
     SpriteRenderer atmosphereSpriteRenderer;
 
+    private int GetSpriteSortOrder(float _scale)
+    {
+        return (Mathf.RoundToInt(_scale * 500) - 500) * 2;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         if (randomScale)
         {
             scale = Random.Range(maxScale, minScale);
+            while (GetSpriteSortOrder(scale) == lastSpriteSortOrder)
+            {
+                scale = Random.Range(maxScale, minScale);
+            }
         }
         else
         {
@@ -47,17 +58,16 @@ public class ParallaxProp : MonoBehaviour
         }
 
         //TODO: find a way to add a blue haze to the sprite proportional to its scale, to simulate atmospheric perspective
-        //atmosphereSpriteRenderer.transform.position = spriteRenderer.transform.position;
-        //atmosphereSpriteRenderer.transform.localScale = spriteRenderer.transform.localScale;
-
-        Color sprColor = atmosphereSpriteRenderer.color;
-        atmosphereSpriteRenderer.color = new Color(sprColor.r, sprColor.g, sprColor.b, Mathf.Abs(scale - 1) * Mathf.Abs(scale - 1)) * 0.5f;
-
-        int spriteSortOrder = (Mathf.RoundToInt(scale * 500) - 500) * 2;
+        int spriteSortOrder = GetSpriteSortOrder(scale);
         spriteRenderer.sortingOrder = spriteSortOrder;
         atmosphereSpriteRenderer.sortingOrder = spriteSortOrder + 1;
         originalPosition = gameObject.transform.position;
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+
+        Color sprColor = atmosphereSpriteRenderer.color;
+        atmosphereSpriteRenderer.color = new Color(sprColor.r, sprColor.g, sprColor.b, Mathf.Abs(scale - 1) * Mathf.Abs(scale - 1) * Mathf.Abs(scale - 1)) * 0.5f;
+
+        lastSpriteSortOrder = spriteSortOrder;
     }
 
     // Update is called once per frame

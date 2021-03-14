@@ -84,7 +84,8 @@ public class GenerateLevel : MonoBehaviour
 
     private BiomeBackgroundGeneration currentBackgroundBiome;
     private float nextBackgroundPrefabXPosition;
-    private float nextFarBackgrounPrefabXPosition;
+    private float nextFarBackgroundPrefabXPosition;
+    private int lastFarBackgroundPrefabScale;
 
     [Header("Level Seed")]//variables to do with creating a seed for Random
     [SerializeField]
@@ -138,10 +139,10 @@ public class GenerateLevel : MonoBehaviour
             Instantiate(currentBackgroundBiome.backgroundPrefabs[Random.Range(0, currentBackgroundBiome.backgroundPrefabs.Count)], new Vector3(xPos + 150, 0, 0), Quaternion.identity);
             nextBackgroundPrefabXPosition = xPos + Random.Range(backgroundPrefabMinDistance, backgroundPrefabMaxDistance);
         }
-        if (xPos >= nextFarBackgrounPrefabXPosition && currentBackgroundBiome.farBackgroundPrefabs.Count != 0)
+        if (xPos >= nextFarBackgroundPrefabXPosition && currentBackgroundBiome.farBackgroundPrefabs.Count != 0)
         {
             Instantiate(currentBackgroundBiome.farBackgroundPrefabs[Random.Range(0, currentBackgroundBiome.farBackgroundPrefabs.Count)], new Vector3(xPos + 500, 0, 0), Quaternion.identity);
-            nextFarBackgrounPrefabXPosition = xPos + Random.Range(farBackgroundPrefabMinDistance, farBackgroundPrefabMaxDistance);
+            nextFarBackgroundPrefabXPosition = xPos + Random.Range(farBackgroundPrefabMinDistance, farBackgroundPrefabMaxDistance);
         }
     }
 
