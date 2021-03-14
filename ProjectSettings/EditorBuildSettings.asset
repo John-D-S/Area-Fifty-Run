@@ -6,11 +6,14 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
     path: Assets/AreaFiftyRun/Scenes/SampleScene.unity
     guid: edc394df5b329324faadc71df034b558
+  - enabled: 1
+    path: Assets/AreaFiftyRun/Scenes/Main.unity
+    guid: 8709ffffa6c57d046b4f65e3a26b583c
   - enabled: 1
     path: Assets/AreaFiftyRun/Scenes/StartMenu.unity
     guid: ec809cbdf61ae764db7513d5b7777bb7
