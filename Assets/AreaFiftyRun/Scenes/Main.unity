@@ -1044,7 +1044,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 503983832}
-  lerpTime: 0.5
+  posLerpTime: 0.5
+  scaleLerpTime: 0.1
+  baseScale: 8
+  scaleMultiplier: 5
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -1588,6 +1591,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5107224514901292838, guid: 7e6d125328a9a944dbbefe3db8549c9f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5107224516159570999, guid: 7e6d125328a9a944dbbefe3db8549c9f, type: 3}
+      propertyPath: m_Volume
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
