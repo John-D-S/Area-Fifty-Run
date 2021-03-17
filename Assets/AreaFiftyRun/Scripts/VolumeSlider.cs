@@ -21,7 +21,7 @@ public class VolumeSlider : MonoBehaviour
         slider.minValue = 0;
         slider.maxValue = 1;
         slider.onValueChanged.AddListener(SliderValueChanged);
-        slider.value = 0.5f;
+        slider.value = 0.3f;
     }
 
     private void SliderValueChanged(float _value)
