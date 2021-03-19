@@ -25,7 +25,7 @@ public class WallOfDeath : MonoBehaviour
 
         if (!doNotMove && playerLeftBunker)
         {
-        gameObject.transform.Translate(new Vector3(Time.fixedDeltaTime * Speed, 0, 0));
+            gameObject.transform.Translate(new Vector3(Time.fixedDeltaTime * Speed, 0, 0));
         }
     }
 }
