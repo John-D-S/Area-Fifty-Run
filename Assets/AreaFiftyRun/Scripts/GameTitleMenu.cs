@@ -8,11 +8,13 @@ public class GameTitleMenu : MonoBehaviour
     
     public void StartGame()
     {
-        SceneManager.LoadScene(0);
+        //Loads the game scene
+        SceneManager.LoadScene(0); 
     }
 
     public void QuitGame()
     {
+        //Quits to the editor if in Unity, Quits the game if playing the build.
         Debug.Log ("Quit");
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;

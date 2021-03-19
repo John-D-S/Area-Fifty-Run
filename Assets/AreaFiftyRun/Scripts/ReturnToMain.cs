@@ -9,6 +9,7 @@ public class ReturnToMain : MonoBehaviour
     
     public void MainMenu()
     {
+        //Sets the timescale back to 1 and Loads the Main menu screen
         Time.timeScale = 1;
         SceneManager.LoadScene(1);
     }

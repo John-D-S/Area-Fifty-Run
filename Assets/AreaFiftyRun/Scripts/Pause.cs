@@ -11,10 +11,11 @@ public class Pause : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Cancel"))
+        if (Input.GetButtonDown("Cancel"))  
         {
             if (gamePaused == false)
             {
+                //Pauses the time scale of the game, and sets the pause menu as active
                 Time.timeScale = 0;
                 gamePaused = true;
                 //Cursor.visible = true;
@@ -22,6 +23,7 @@ public class Pause : MonoBehaviour
             }
             else
             {
+                //unpause the time scale of the game, and sets the pause menu inactive
                 pauseMenu.SetActive(false);
                 //Cursor.visible = false;
                 gamePaused = false;
@@ -29,7 +31,10 @@ public class Pause : MonoBehaviour
             }
         }
     }
-
+    /// <summary>
+    /// The function for the resume button of the pause menu
+    /// Deactiavtes the pause menu and sets the games time scale back to 1
+    /// </summary>
     public void UnpauseGame()
     {
         pauseMenu.SetActive(false);

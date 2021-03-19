@@ -6,15 +6,20 @@ using TMPro;
 
 public class DialogueControl : MonoBehaviour
 {
+    [Header("Player")]
     [SerializeField] private PlayerController playerController;
    
+    [Header("Speech Bubbles")]
+    [SerializeField] private GameObject speechBubble;
+    [SerializeField] private GameObject deathBubble;
+   
+    [Header("Speech Bubble Text Boxes")]
     [SerializeField] private TextMeshProUGUI playerDialogueText;
     [SerializeField] private TextMeshProUGUI playerDeathText;
 
-    [SerializeField] private AudioSource source;
 
 
-
+    [Header("Quotes")]
     [SerializeField] private string[] playerStartSentences = new string[] 
     {
         "I got the need for speed!",
@@ -50,14 +55,15 @@ public class DialogueControl : MonoBehaviour
         "Houston, we have a problem"
     };
     
-    [SerializeField] private GameObject speechBubble;
-    [SerializeField] private GameObject deathBubble;
+    [Header("Background Audio")]
+    [SerializeField] private AudioSource source;
     
     private float speechBubbleTimer = 3f;
 
     // Start is called before the first frame update
     void Start()
     {
+        //Sets the quotes for the speech bubbles when the game starts
         playerDialogueText.text = playerStartSentences[Random.Range(0, playerStartSentences.Length)];
         playerDeathText.text = playerDeathSentences[Random.Range(0, playerDeathSentences.Length)];
 
@@ -67,22 +73,22 @@ public class DialogueControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerController.leftBunker == true)
+        if (playerController.leftBunker == true)        
         {
-            if(!source.isPlaying)
+            if(!source.isPlaying)                   //Starts the background music when the player leaves the bunker
                 source.Play();
-            speechBubbleTimer -= Time.deltaTime;
+            speechBubbleTimer -= Time.deltaTime;    //Sets the timer going for the display of the Start Speech bubble
             if (speechBubbleTimer > 0)
             {
                 speechBubble.SetActive(true);
             }
             else
             {
-                speechBubble.SetActive(false);
+                speechBubble.SetActive(false);      //Disables the speech bubble when the time ends
             }
         }
 
-        if (playerController.dead == true)
+        if (playerController.dead == true)          //enables the Death Speech bubble
         {
             deathBubble.SetActive(true);
         }

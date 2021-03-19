@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Movement")]
     [SerializeField, Tooltip("The force applied to the player to move it on the ground.")]
     private float normalMovementForce = 60;
     [SerializeField, Tooltip ("The force applied to the player to move it on the ground while boosted.")]
@@ -17,6 +18,8 @@ public class PlayerController : MonoBehaviour
     private float jumpForce = 3;
     [SerializeField, Tooltip("The maximum number of jumps the player is able to make before they land again")]
     private int maxJumpsRemaining = 2;
+
+    [Header("Jetpack")]
     [SerializeField, Tooltip("The amount of time in seconds that the jetPack can be used for at a time.")]
     private float jetPackFuelMax = 3;
     [SerializeField, Tooltip("The Upwards force applied to the player while the jetpack is being used")]
@@ -24,6 +27,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField, Tooltip("The wearable jetpack prefab that the player will wear while the jetpack is active")]
     private GameObject jetPack;
 
+    [Header("Sound Effects")]
     [SerializeField]
     private AudioSource jumpSound;
     [SerializeField]
@@ -196,7 +200,7 @@ public class PlayerController : MonoBehaviour
         //using Jetpack
         if (Input.GetAxis("Jump") > 0 && jetPackFuel > 0 && timeSinceLeftGround > 0.25f)
         {
-            jetpackSound.Play();
+            jetpackSound.Play();    //Plays Jetpack sound
             rb.AddForce(Vector3.up * jetPackForce, ForceMode2D.Force);
             jetPackFuel -= Time.deltaTime;
             UpdateJetpackFuelGuage();
@@ -208,15 +212,15 @@ public class PlayerController : MonoBehaviour
             {
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
                 rb.AddForce(groundNormal.normalized * jumpForce, ForceMode2D.Impulse);
-                jumpSound.Play();
+                jumpSound.Play();   //Plays the jump sound
             }
             else if (jumpsRemaining < maxJumpsRemaining)
             {
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
-                jumpSound.Play();
+                jumpSound.Play();   //Plays the jump sound
             }
             rb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
-            jumpSound.Play();
+            jumpSound.Play();       //Plays the jump sound
             jumpsRemaining -= 1;
             exhaustEmissionRate = 0;
         }
