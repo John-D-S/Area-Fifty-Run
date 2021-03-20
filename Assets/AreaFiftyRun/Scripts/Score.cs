@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -10,6 +11,11 @@ public class Score : MonoBehaviour
     private GameObject player;
 
     private TextMeshProUGUI scoreText;
+
+    internal static int GrabScore(object score)
+    {
+        throw new NotImplementedException();
+    }
 
     private int score = 0;
 
@@ -26,4 +32,8 @@ public class Score : MonoBehaviour
         }
         scoreText.text = "Score: " + score;
     }
+
+    
+
+
 }
