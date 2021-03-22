@@ -54,6 +54,11 @@ public class PlayerController : MonoBehaviour
     [System.NonSerialized] public bool dead;
     [System.NonSerialized] public bool leftBunker = false;
 
+    [Header("Player Animator")]
+    public Animator animator;
+
+    private float horiMovement = 0f;
+
     void Start()
     {
         wallOfDeath = GameObject.FindGameObjectWithTag("WallOfDeath");
@@ -241,6 +246,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(new Vector2(Input.GetAxis("Horizontal") * movementForce, 0));
             rb.AddForce(new Vector2(-rb.velocity.x * runningDifficulty, 0));
+            animator.SetFloat("Speed", rb.velocity.x);
         }
         else
         {
