@@ -57,8 +57,7 @@ public class PlayerController : MonoBehaviour
     [Header("Player Animator")]
     public Animator animator;
 
-    private float horiMovement = 0f;
-
+   
     void Start()
     {
         wallOfDeath = GameObject.FindGameObjectWithTag("WallOfDeath");
@@ -190,11 +189,13 @@ public class PlayerController : MonoBehaviour
         if (boostTimer <= 0)
         {
             movementForce = normalMovementForce;
+            animator.SetBool("IsSprinting", false);
         }
         else if (boostTimer > 0)
         {
             movementForce = boostMovementForce;
             boostTimer -= Time.deltaTime;
+            animator.SetBool("IsSprinting", true);
         }
 
         if (jetPackFuel <= 0)
@@ -218,20 +219,26 @@ public class PlayerController : MonoBehaviour
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
                 rb.AddForce(groundNormal.normalized * jumpForce, ForceMode2D.Impulse);
                 jumpSound.Play();   //Plays the jump sound
+                animator.SetBool("IsJumping", true);
             }
             else if (jumpsRemaining < maxJumpsRemaining)
             {
+                animator.SetBool("IsDblJumping", true);
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
                 jumpSound.Play();   //Plays the jump sound
             }
             rb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
             jumpSound.Play();       //Plays the jump sound
+            animator.SetBool("IsDblJumping", false);
+            animator.SetBool("IsJumping", true);            
             jumpsRemaining -= 1;
             exhaustEmissionRate = 0;
         }
         else
         {
             exhaustEmissionRate = 0;
+            animator.SetBool("IsJumping", false);
+            animator.SetBool("IsDblJumping", false);
         }
 
         var em = jetPackExhaust.emission;
@@ -252,5 +259,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(new Vector2(Input.GetAxis("Horizontal") * airtimeMovementForce, 0));
         }
+
+        
     }
 }
