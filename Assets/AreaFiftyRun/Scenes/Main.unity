@@ -1218,7 +1218,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelBiomes:
   - biome: 0
-    possibleNextBiomes: 00000000
+    possibleNextBiomes: 010000000300000002000000
     inclineGroundModules:
     - {fileID: 1578873848035185762, guid: 29f6c3e7d42246e4f94d0ea6daf8e57f, type: 3}
     - {fileID: 6248854039302831706, guid: 0bd84c95e38e87149bfbc79166df1e25, type: 3}
@@ -1243,18 +1243,46 @@ MonoBehaviour:
     - {fileID: 4463262977756991392, guid: 32edfa021a406ce4c89025f38f527380, type: 3}
     - {fileID: 2564878739170317944, guid: cd1bf75f6471c27408919eff458708a0, type: 3}
     propChance: 0.608
-  - biome: 0
-    possibleNextBiomes: 
-    inclineGroundModules: []
-    flatGroundModules: []
-    declineGroundModules: []
+  - biome: 1
+    possibleNextBiomes: 0000000002000000
+    inclineGroundModules:
+    - {fileID: 1811757738414964735, guid: 8ec7becc55fbb8441a35c68a85f7be3b, type: 3}
+    - {fileID: 4114635500858179176, guid: 2f6431b7e7c971f47b17a18f32ccc0f1, type: 3}
+    - {fileID: 3851040465154261852, guid: 4b25236826c507a418b6689513160a72, type: 3}
+    - {fileID: 6532185809266664962, guid: 989f3e5bcaa800b44b4f72d2b1060e9d, type: 3}
+    - {fileID: 6532185809266664962, guid: 989f3e5bcaa800b44b4f72d2b1060e9d, type: 3}
+    flatGroundModules:
+    - {fileID: 7604084363375677068, guid: 4ff0cbf951550a14aae844e79278bebb, type: 3}
+    - {fileID: 4543956261441320450, guid: f68eb07e23447c0479af0057d0123b78, type: 3}
+    - {fileID: 2147964828522092124, guid: beebef89dec3b6746835bfce213cf57b, type: 3}
+    - {fileID: 292872849449440377, guid: c21863cd1d11d274292800284ac5fb48, type: 3}
+    declineGroundModules:
+    - {fileID: 4016867638196007838, guid: 5e2b5118bc6efda4196b5b6d104fcce8, type: 3}
+    - {fileID: 7818018226376029738, guid: 2accb823c2bd7a14e97e546cbc9c455c, type: 3}
+    - {fileID: 1524467249596057960, guid: 61e45d7b0f27abd439a42ddaa5fa1174, type: 3}
+    - {fileID: 1527890347143234200, guid: a0160ab6405182c48a9ebeb7576d1e21, type: 3}
     propModules: []
     propChance: 0
-  - biome: 0
-    possibleNextBiomes: 
-    inclineGroundModules: []
-    flatGroundModules: []
-    declineGroundModules: []
+  - biome: 2
+    possibleNextBiomes: 0000000001000000
+    inclineGroundModules:
+    - {fileID: 251777204057906039, guid: eea68aa5f729590478b265f269203129, type: 3}
+    - {fileID: 3071745076434175360, guid: a0a289aa774cbdd46a4729c43f3931fd, type: 3}
+    - {fileID: 1548663633318033110, guid: 1fc9583f203747b49800ed0dd283ee6a, type: 3}
+    - {fileID: 2250607246672386640, guid: 43684cacf65e73e4facf1dab43402545, type: 3}
+    - {fileID: 4581957750602752463, guid: a4ae267c2913ee6499c3900fd57da5e5, type: 3}
+    - {fileID: 7637277840115993908, guid: a2bdf6abc54b4224c818f98e64578058, type: 3}
+    flatGroundModules:
+    - {fileID: 2250607246672386640, guid: 43684cacf65e73e4facf1dab43402545, type: 3}
+    - {fileID: 4581957750602752463, guid: a4ae267c2913ee6499c3900fd57da5e5, type: 3}
+    - {fileID: 7637277840115993908, guid: a2bdf6abc54b4224c818f98e64578058, type: 3}
+    declineGroundModules:
+    - {fileID: 1642520296370266156, guid: 6235333f6d52d2843bc36a28f52f0d25, type: 3}
+    - {fileID: 3922396418919592239, guid: f697dcaf044aa8d4ab21e48be38521b8, type: 3}
+    - {fileID: 27663054520097177, guid: 213e5a52c0e03ef4bb666e4bf299950b, type: 3}
+    - {fileID: 2250607246672386640, guid: 43684cacf65e73e4facf1dab43402545, type: 3}
+    - {fileID: 4581957750602752463, guid: a4ae267c2913ee6499c3900fd57da5e5, type: 3}
+    - {fileID: 7637277840115993908, guid: a2bdf6abc54b4224c818f98e64578058, type: 3}
     propModules: []
     propChance: 0
   - biome: 0
@@ -1300,14 +1328,16 @@ MonoBehaviour:
     - {fileID: 8750233878826932956, guid: b51534ea398084342928a35ef8502e0d, type: 3}
     backGroundGround: {fileID: 440756479}
     backgroundGroundColor: {r: 0.8867924, g: 0.6471032, b: 0.4224813, a: 1}
+  - backgroundPrefabs:
+    - {fileID: 0}
+    farBackgroundPrefabs:
+    - {fileID: 0}
+    backGroundGround: {fileID: 440756479}
+    backgroundGroundColor: {r: 0.7924528, g: 0.5743509, b: 0.48967603, a: 1}
   - backgroundPrefabs: []
     farBackgroundPrefabs: []
-    backGroundGround: {fileID: 0}
-    backgroundGroundColor: {r: 0, g: 0, b: 0, a: 0}
-  - backgroundPrefabs: []
-    farBackgroundPrefabs: []
-    backGroundGround: {fileID: 0}
-    backgroundGroundColor: {r: 0, g: 0, b: 0, a: 0}
+    backGroundGround: {fileID: 440756479}
+    backgroundGroundColor: {r: 0.60681736, g: 0.6886792, b: 0.48402455, a: 1}
   - backgroundPrefabs: []
     farBackgroundPrefabs: []
     backGroundGround: {fileID: 0}
