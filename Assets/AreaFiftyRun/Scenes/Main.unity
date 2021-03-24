@@ -1218,7 +1218,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelBiomes:
   - biome: 0
-    possibleNextBiomes: 010000000300000002000000
+    possibleNextBiomes: 0100000002000000
     inclineGroundModules:
     - {fileID: 1578873848035185762, guid: 29f6c3e7d42246e4f94d0ea6daf8e57f, type: 3}
     - {fileID: 6248854039302831706, guid: 0bd84c95e38e87149bfbc79166df1e25, type: 3}
@@ -1315,8 +1315,8 @@ MonoBehaviour:
     propChance: 0
   currentBiome: 0
   modulesBeforeWorld: 4
-  minimumModulesPerBiome: 100
-  maximumModulesPerBiome: 200
+  minimumModulesPerBiome: 50
+  maximumModulesPerBiome: 100
   maximumModuleHeight: 5
   backgroundBiomes:
   - backgroundPrefabs:
