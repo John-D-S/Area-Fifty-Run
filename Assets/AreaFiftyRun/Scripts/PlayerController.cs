@@ -216,6 +216,7 @@ public class PlayerController : MonoBehaviour
         {
             if (timeSinceLeftGround < 0.25f && jumpsRemaining == maxJumpsRemaining)
             {
+                // the first jump
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
                 rb.AddForce(groundNormal.normalized * jumpForce, ForceMode2D.Impulse);
                 jumpSound.Play();   //Plays the jump sound
@@ -223,14 +224,13 @@ public class PlayerController : MonoBehaviour
             }
             else if (jumpsRemaining < maxJumpsRemaining)
             {
-                animator.SetBool("IsDblJumping", true);
+                // Second jump
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
-                jumpSound.Play();   //Plays the jump sound
+                jumpSound.Play();   //Plays the jump sound                
+                animator.SetBool("IsDblJumping", true);
             }
             rb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
-            jumpSound.Play();       //Plays the jump sound
-            animator.SetBool("IsDblJumping", false);
-            animator.SetBool("IsJumping", true);            
+            jumpSound.Play();       //Plays the jump sound                        
             jumpsRemaining -= 1;
             exhaustEmissionRate = 0;
         }
