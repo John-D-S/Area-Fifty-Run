@@ -260,6 +260,14 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(new Vector2(Input.GetAxis("Horizontal") * airtimeMovementForce, 0));
         }
 
-        
+
+        if (groundNormal.y < 0.25f)
+        {
+            animator.SetBool("IsClimbing", true);
+        }
+        else
+        {
+            animator.SetBool("IsClimbing", false);
+        }
     }
 }
