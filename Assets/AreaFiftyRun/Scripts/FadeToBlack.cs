@@ -45,7 +45,7 @@ public class FadeToBlack : MonoBehaviour
                 timeToStayBlack -= Time.deltaTime;
                 if (timeToStayBlack < 0)
                 {                            
-                    SceneManager.LoadScene(0);
+                    SceneManager.LoadScene(1);
                 }
             }
         }

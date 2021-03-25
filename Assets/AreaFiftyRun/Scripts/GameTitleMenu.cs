@@ -9,7 +9,7 @@ public class GameTitleMenu : MonoBehaviour
     public void StartGame()
     {
         //Loads the game scene
-        SceneManager.LoadScene(0); 
+        SceneManager.LoadScene(1); 
     }
 
     public void QuitGame()
