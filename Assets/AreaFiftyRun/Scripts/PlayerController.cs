@@ -77,6 +77,7 @@ public class PlayerController : MonoBehaviour
         }
         jetPackExhaust = jetPackInstance.GetComponentInChildren<ParticleSystem>();
         jetPackInstance.SetActive(false);
+        groundNormal = new Vector2(0, 1);
     }
 
     //picking up powerups
@@ -211,6 +212,7 @@ public class PlayerController : MonoBehaviour
             jetPackFuel -= Time.deltaTime;
             UpdateJetpackFuelGuage();
             exhaustEmissionRate = 300;
+            animator.SetBool("IsJetpacking", true);
         }
         else if(JumpPressedThisFrame() && jumpsRemaining > 0)//jumping and doublejumping
         {
@@ -239,6 +241,7 @@ public class PlayerController : MonoBehaviour
             exhaustEmissionRate = 0;
             animator.SetBool("IsJumping", false);
             animator.SetBool("IsDblJumping", false);
+            animator.SetBool("IsJetpacking", false);
         }
 
         var em = jetPackExhaust.emission;
@@ -268,6 +271,15 @@ public class PlayerController : MonoBehaviour
         else
         {
             animator.SetBool("IsClimbing", false);
+        }
+
+        if (jetPackFuel > 0 && !grounded)
+        {
+            animator.SetBool("IsJetpacking", true);
+        }
+        else
+        {
+            animator.SetBool("IsJetpacking", false);
         }
     }
 }

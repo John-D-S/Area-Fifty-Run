@@ -136,6 +136,7 @@ public class GenerateLevel : MonoBehaviour
 
         if (xPos >= nextBackgroundPrefabXPosition && currentBackgroundBiome.backgroundPrefabs.Count != 0)
         {
+//            Debug.Log(currentBackgroundBiome.backgroundPrefabs.Count);
             Instantiate(currentBackgroundBiome.backgroundPrefabs[Random.Range(0, currentBackgroundBiome.backgroundPrefabs.Count)], new Vector3(xPos + 150, 0, 0), Quaternion.identity);
             nextBackgroundPrefabXPosition = xPos + Random.Range(backgroundPrefabMinDistance, backgroundPrefabMaxDistance);
         }

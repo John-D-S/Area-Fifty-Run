@@ -32,8 +32,6 @@ public class CameraController : MonoBehaviour
         cameraComponent.orthographicSize = Mathf.Lerp(cameraComponent.orthographicSize, targetCameraSize, scaleLerpTime);
         gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, targetPosition, posLerpTime);
 
-        Debug.Log(gameObject.transform.localScale);
-
         lastFramePlayerPosition = player.transform.position;
     }
 }
