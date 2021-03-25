@@ -1,14 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
+[RequireComponent(typeof(TMP_Text))]
 public class Highscore : MonoBehaviour
 {
 
-    public int highScore;
-    public int gameScore;
+    private TMP_Text highscoreText;
 
-    
+    private int highScore;
+    public int HighScore 
+    {
+        get
+        {
+            return highScore;
+        }
+        private set
+        {
+            highScore = value;
+            highscoreText.text = "Highscore: " + highScore.ToString();
+            
+        }
+     }
+
+
+    private int gameScore;
+    public int GameScore
+    {
+        get => gameScore;
+        set
+        {
+            gameScore = value;
+            SaveHighscore();
+        }
+    }
+
+    private void Awake() => highscoreText = GetComponent<TMP_Text>();
+
+    private void Start() => HighScore = CallHighscore(highScore);
+
+    private void OnDisable() => SaveHighscore();
+
     public void SaveHighscore()
     {
         
@@ -18,8 +51,8 @@ public class Highscore : MonoBehaviour
         {
             if (gameScore > PlayerPrefs.GetInt("highScore"))
             {
-                highScore = gameScore;
-                PlayerPrefs.SetInt("highScore", highScore);
+                HighScore = gameScore;
+                PlayerPrefs.SetInt("highScore", HighScore);
                 PlayerPrefs.Save();
             }
         }
@@ -27,8 +60,8 @@ public class Highscore : MonoBehaviour
         {
             if (gameScore > highScore)
             {
-                highScore = gameScore;
-                PlayerPrefs.SetInt("highScore", highScore);
+                HighScore = gameScore;
+                PlayerPrefs.SetInt("highScore", HighScore);
                 PlayerPrefs.Save();
             }
         }
@@ -36,7 +69,8 @@ public class Highscore : MonoBehaviour
 
     public int CallHighscore(int _highScore)
     {
-        _highScore =  PlayerPrefs.GetInt("highscore");
+
+        _highScore =  PlayerPrefs.GetInt("highScore", 0);
         return _highScore;
     }
 }
