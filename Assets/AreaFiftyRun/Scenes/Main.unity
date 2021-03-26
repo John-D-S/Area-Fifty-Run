@@ -1322,7 +1322,7 @@ Transform:
   - {fileID: 324747213}
   - {fileID: 2127975302}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -1.476}
 --- !u!50 &503983836
 Rigidbody2D:
@@ -2682,7 +2682,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5107224514901292838, guid: 7e6d125328a9a944dbbefe3db8549c9f, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5107224514901292838, guid: 7e6d125328a9a944dbbefe3db8549c9f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3119,7 +3119,7 @@ Transform:
   - {fileID: 96934323}
   - {fileID: 2112231715}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1648441197
 BoxCollider2D:
@@ -9222,7 +9222,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 7f914eecdfd06974c9ecb2c461452e63, type: 3}
     - target: {fileID: 2611477137780671857, guid: 259db13a2c0f08647962910b72ed2732, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2611477137780671857, guid: 259db13a2c0f08647962910b72ed2732, type: 3}
       propertyPath: m_LocalPosition.x

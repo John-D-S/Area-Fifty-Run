@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ParallaxProp : MonoBehaviour
+public class ParallaxProp : Removable
 {
     private static int lastSpriteSortOrder = 0;
 
@@ -39,6 +39,7 @@ public class ParallaxProp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GetWallOfDeath();
         if (randomScale)
         {
             scale = Random.Range(maxScale, minScale);
@@ -73,6 +74,7 @@ public class ParallaxProp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        DestroyOldObject();
         if (mainCamera != null)
         {
             Vector2 camPos = (Vector2)mainCamera.transform.position; //campos is shorthand for the position of the camera
