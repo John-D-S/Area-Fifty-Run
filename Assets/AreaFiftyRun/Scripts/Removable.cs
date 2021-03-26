@@ -11,7 +11,6 @@ public class Removable : MonoBehaviour
     {
         gameObjectOriginalPosition = gameObject.transform.position;
         wallOfDeath = GameObject.FindGameObjectWithTag("WallOfDeath");
-        Debug.Log("hello");
     } 
 
     public void DestroyOldObject()
@@ -20,7 +19,6 @@ public class Removable : MonoBehaviour
         {
             if (wallOfDeath.transform.position.x > gameObjectOriginalPosition.x)
             {
-                Debug.Log("destroyed object");
                 Destroy(gameObject);
             }
         }

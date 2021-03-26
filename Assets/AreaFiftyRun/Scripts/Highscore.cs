@@ -69,8 +69,17 @@ public class Highscore : MonoBehaviour
 
     public int CallHighscore(int _highScore)
     {
-
         _highScore =  PlayerPrefs.GetInt("highScore", 0);
         return _highScore;
+    }
+
+    public void ResetHighscore()
+    {
+        if (PlayerPrefs.HasKey("highScore"))
+        {
+            HighScore = 0;
+            PlayerPrefs.SetInt("highScore", 0);
+            PlayerPrefs.Save();
+        }
     }
 }
