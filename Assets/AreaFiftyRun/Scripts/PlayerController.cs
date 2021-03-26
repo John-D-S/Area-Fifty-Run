@@ -1,34 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.SceneManagement;
+//using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-
+    [Header("Movement")]
     [SerializeField, Tooltip("The force applied to the player to move it on the ground.")]
     private float normalMovementForce = 60;
-    [SerializeField]
+    [SerializeField, Tooltip ("The force applied to the player to move it on the ground while boosted.")]
     private float boostMovementForce = 100;
+    [SerializeField, Tooltip("This influences the maximum speed of the player while they're on the ground")]
+    private float runningDifficulty = 1;
     [SerializeField, Tooltip("The force applied to the player to move it in the air")]
     private float airtimeMovementForce = 5;
     [SerializeField, Tooltip("The impulse force applied to the player to make it jump")]
     private float jumpForce = 3;
     [SerializeField, Tooltip("The maximum number of jumps the player is able to make before they land again")]
     private int maxJumpsRemaining = 2;
-    [SerializeField, Tooltip("This influences the maximum speed of the player while they're on the ground")]
-    private float runningDifficulty = 1;
-    [SerializeField]
+
+    [Header("Jetpack")]
+    [SerializeField, Tooltip("The amount of time in seconds that the jetPack can be used for at a time.")]
     private float jetPackFuelMax = 3;
-    [SerializeField]
+    [SerializeField, Tooltip("The Upwards force applied to the player while the jetpack is being used")]
     private float jetPackForce = 20;
-    [SerializeField]
+    [SerializeField, Tooltip("The wearable jetpack prefab that the player will wear while the jetpack is active")]
     private GameObject jetPack;
+
+    [Header("Sound Effects")]
+    [SerializeField]
+    private AudioSource jumpSound;
+    [SerializeField]
+    private AudioSource jetpackSound;
     
 
     //how many jumps the player is able to make right now before they land back on the ground
     private int jumpsRemaining = 1;
-
     private Rigidbody2D rb;
     private Collider2D chCollider;
     private bool grounded = false;
@@ -39,16 +46,39 @@ public class PlayerController : MonoBehaviour
     private float boostTimer;
     private float movementForce;
     private float jetPackFuel;
-    private bool jetPackEnabled;
     private GameObject jetPackInstance;
+    private GameObject jetPackFuelGauge;
+    private ParticleSystem jetPackExhaust;
+    private GameObject wallOfDeath;
+    private float exhaustEmissionRate;
+    [System.NonSerialized] public bool dead;
+    [System.NonSerialized] public bool leftBunker = false;
 
+    [Header("Player Animator")]
+    public Animator animator;
+
+   
     void Start()
     {
+        wallOfDeath = GameObject.FindGameObjectWithTag("WallOfDeath");
+        wallOfDeath.SetActive(false);
+
         rb = gameObject.GetComponent<Rigidbody2D>();
         chCollider = gameObject.GetComponent<Collider2D>();
         movementForce = normalMovementForce;
+        jetPackInstance = Instantiate(jetPack, gameObject.transform);
+        foreach (Transform thing in jetPackInstance.transform)
+        {
+            if (thing.tag == "Gauge")
+            {
+                jetPackFuelGauge = thing.gameObject;
+                break;
+            }
+        }
+        jetPackExhaust = jetPackInstance.GetComponentInChildren<ParticleSystem>();
+        jetPackInstance.SetActive(false);
+        groundNormal = new Vector2(0, 1);
     }
-
 
     //picking up powerups
     private void OnTriggerEnter2D(Collider2D collider)
@@ -62,33 +92,26 @@ public class PlayerController : MonoBehaviour
         {
             jetPackFuel = jetPackFuelMax;
             Destroy(collider.gameObject);
-            jetPackInstance = Instantiate(jetPack, transform);
+            jetPackInstance.SetActive(true);
+            UpdateJetpackFuelGuage();
+        }
+        if (collider.tag == "WallOfDeath")
+        {
+            dead = true;
+            //SceneManager.LoadScene(0);//if the wall touches the player, reload the scene
+            //loadscene(0) is now called in blackscreen, after fading to black
+        }
+        if (collider.tag == "StartWall")
+        {
+            leftBunker = true;
+            wallOfDeath.SetActive(true);
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        for (int i = 0; i < collision.contactCount; i++)
-        {
-            if (collision.GetContact(i).collider.tag == "WallOfDeath")
-            {
-                SceneManager.LoadScene(0);//if the wall touches the player, reload the scene
-            }
-        }
+        UpdateJumps(collision);
         grounded = true;
-        //jetPackEnabled = false;
-
-        //this recharges the jumps when you land on the a surface that isn't a roof
-        if (jumpsRemaining != maxJumpsRemaining)
-        {
-            for (int i = 0; i < collision.contactCount; i++)
-            {
-                if (collision.GetContact(i).normal.y >= -0.1f)
-                {
-                    jumpsRemaining = maxJumpsRemaining;
-                }
-            }
-        }
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -104,6 +127,11 @@ public class PlayerController : MonoBehaviour
         }
         //ground normal is the average normal of all points of contact
         groundNormal = contactNormalSum / noOfContacts;
+
+        if (jumpsRemaining == 0 && grounded)
+        {
+            UpdateJumps(collision);
+        }
     }
     
     private void OnCollisionExit2D(Collision2D collision)
@@ -112,7 +140,6 @@ public class PlayerController : MonoBehaviour
         groundNormal = Vector2.up;
     }
 
-    //TODO: make this a generalized function for any axis
     private bool JumpPressedThisFrame()
     {
         if (Input.GetAxis("Jump") <= 0 && jumpHeldDown == true)
@@ -131,70 +158,94 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void UpdateJetpackFuelGuage()
+    {
+        jetPackFuelGauge.transform.localScale = new Vector3(0.5f, jetPackFuel / jetPackFuelMax, 1);
+        jetPackFuelGauge.transform.localPosition = new Vector3(0, 0.5f * (jetPackFuel / jetPackFuelMax) - 0.5f, 0);
+    }
+
+    void UpdateJumps(Collision2D collision)
+    {
+        //this recharges the jumps when you land on the a surface that isn't a roof
+        if (jumpsRemaining != maxJumpsRemaining)
+        {
+            for (int i = 0; i < collision.contactCount; i++)
+            {
+                if (collision.GetContact(i).normal.y >= -0.1f)
+                {
+                    jumpsRemaining = maxJumpsRemaining;
+                }
+            }
+        }
+    }
+
     void FixedUpdate()
     {
+        if (dead)
+        {
+            return;
+        }
+
         //using PizzaBoost
         if (boostTimer <= 0)
         {
             movementForce = normalMovementForce;
+            animator.SetBool("IsSprinting", false);
         }
         else if (boostTimer > 0)
         {
             movementForce = boostMovementForce;
             boostTimer -= Time.deltaTime;
+            animator.SetBool("IsSprinting", true);
         }
 
-        if (jetPackFuel <= 0 && jetPackInstance != null)
+        if (jetPackFuel <= 0)
         {
-            Destroy(jetPackInstance);
-            jetPackInstance = null;
-        }
-
-        //using Jetpack
-        if (Input.GetAxis("Jump") > 0 && jetPackFuel > 0)
-        {
-            rb.AddForce(Vector3.up * jetPackForce, ForceMode2D.Force);
-            jetPackFuel -= Time.deltaTime;
-            Debug.Log(jetPackFuel);
-        }
-        else if (JumpPressedThisFrame() && jumpsRemaining > 0)//jumping and doublejumping
-        {
-            if (timeSinceLeftGround < 0.25f && jumpsRemaining == maxJumpsRemaining)
-            {
-                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
-                rb.AddForce(groundNormal.normalized * jumpForce, ForceMode2D.Impulse);
-            }
-            else if (jumpsRemaining < maxJumpsRemaining)
-            {
-                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
-            }
-            rb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
-            jumpsRemaining -= 1;
-            jumpHeldDown = true;
+            jetPackInstance.SetActive(false);
         }
 
         //using Jetpack
-        if (Input.GetAxis("Jump") > 0 && jetPackFuel > 0)
+        if (Input.GetAxis("Jump") > 0 && jetPackFuel > 0 && timeSinceLeftGround > 0.25f)
         {
+            jetpackSound.Play();    //Plays Jetpack sound
             rb.AddForce(Vector3.up * jetPackForce, ForceMode2D.Force);
             jetPackFuel -= Time.deltaTime;
-            Debug.Log(jetPackFuel);
+            UpdateJetpackFuelGuage();
+            exhaustEmissionRate = 300;
+            animator.SetBool("IsJetpacking", true);
         }
         else if(JumpPressedThisFrame() && jumpsRemaining > 0)//jumping and doublejumping
         {
             if (timeSinceLeftGround < 0.25f && jumpsRemaining == maxJumpsRemaining)
             {
+                // the first jump
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
                 rb.AddForce(groundNormal.normalized * jumpForce, ForceMode2D.Impulse);
+                jumpSound.Play();   //Plays the jump sound
+                animator.SetBool("IsJumping", true);
             }
             else if (jumpsRemaining < maxJumpsRemaining)
             {
+                // Second jump
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+                jumpSound.Play();   //Plays the jump sound                
+                animator.SetBool("IsDblJumping", true);
             }
             rb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
+            jumpSound.Play();       //Plays the jump sound                        
             jumpsRemaining -= 1;
-            jumpHeldDown = true;
+            exhaustEmissionRate = 0;
         }
+        else
+        {
+            exhaustEmissionRate = 0;
+            animator.SetBool("IsJumping", false);
+            animator.SetBool("IsDblJumping", false);
+            animator.SetBool("IsJetpacking", false);
+        }
+
+        var em = jetPackExhaust.emission;
+        em.rateOverTime = exhaustEmissionRate;
 
         if (timeSinceLeftGround < 0.3)
         {
@@ -205,21 +256,30 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(new Vector2(Input.GetAxis("Horizontal") * movementForce, 0));
             rb.AddForce(new Vector2(-rb.velocity.x * runningDifficulty, 0));
+            animator.SetFloat("Speed", rb.velocity.x);
         }
         else
         {
             rb.AddForce(new Vector2(Input.GetAxis("Horizontal") * airtimeMovementForce, 0));
         }
-        /*
-        if (dashCooldown > 0)
+
+
+        if (groundNormal.y < 0.25f)
         {
-            dashCooldown -= Time.fixedDeltaTime;
+            animator.SetBool("IsClimbing", true);
         }
-        if (dash.ReadValue<float>() == 1 && dashCooldown <= 0)
+        else
         {
-            body.AddForce(Camera.transform.rotation * (dashForce * Vector3.forward), ForceMode.Impulse);
-            dashCooldown = 1f;
+            animator.SetBool("IsClimbing", false);
         }
-        */
+
+        if (jetPackFuel > 0 && !grounded)
+        {
+            animator.SetBool("IsJetpacking", true);
+        }
+        else
+        {
+            animator.SetBool("IsJetpacking", false);
+        }
     }
 }

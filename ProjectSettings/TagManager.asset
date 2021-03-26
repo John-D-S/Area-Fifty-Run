@@ -8,6 +8,8 @@ TagManager:
   - Pizza
   - JetPack
   - JetPackWearable
+  - Gauge
+  - StartWall
   layers:
   - Default
   - TransparentFX
